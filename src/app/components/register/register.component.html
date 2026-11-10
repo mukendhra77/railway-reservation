@@ -1,0 +1,186 @@
+<div class="register-page-container">
+  <div class="container register-wrapper">
+    <div class="register-two-col-card card-editorial">
+      <!-- Left Column: Travel Illustration / Photograph -->
+      <div class="register-visual-col">
+        <div class="visual-bg-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1000&q=80"
+            alt="LumaRail High-Speed Train Corridor"
+            class="register-photo"
+          />
+          <div class="visual-gradient-mask"></div>
+          <div class="visual-caption-box">
+            <span class="caption-tag">⚡ LUMARAIL HIGH-SPEED NETWORK</span>
+            <blockquote class="caption-quote font-serif">
+              "Experience the next generation of Indian rail travel: speed, quiet comfort, and seamless smart reservations."
+            </blockquote>
+            <span class="caption-author">— LumaRail Smart Dispatch Platform</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Registration Form -->
+      <div class="register-form-col">
+        <div class="form-inner-wrapper">
+          <div class="register-header">
+            <div class="brand-badge-mini">⚡ SMART ONBOARDING</div>
+            <h2 class="register-title font-serif">{{ 'auth.registerTitle' | translate }}</h2>
+            <p class="register-subtitle">{{ 'auth.registerSubtitle' | translate }}</p>
+          </div>
+
+          @if (errorMessage) {
+            <div class="auth-error-alert">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>{{ errorMessage }}</span>
+            </div>
+          }
+
+          @if (successMessage) {
+            <div class="auth-success-alert">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>{{ successMessage }}</span>
+            </div>
+          }
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+            <!-- Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="reg-name">{{ 'auth.name' | translate }} *</label>
+              <input
+                id="reg-name"
+                type="text"
+                formControlName="name"
+                placeholder="e.g. Aarav Sharma"
+                class="form-control"
+                [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+              />
+              @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+                <span class="invalid-feedback">Full name is required (at least 3 characters).</span>
+              }
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+              <label class="form-label" for="reg-email">{{ 'auth.email' | translate }} *</label>
+              <input
+                id="reg-email"
+                type="email"
+                formControlName="email"
+                placeholder="e.g. traveler@university.edu"
+                class="form-control"
+                [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              />
+              @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                <span class="invalid-feedback">{{ 'auth.invalidEmail' | translate }}</span>
+              }
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+              <label class="form-label" for="reg-phone">{{ 'auth.phone' | translate }} *</label>
+              <input
+                id="reg-phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="e.g. 9876543210 (10 digits)"
+                class="form-control"
+                [class.is-invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
+              />
+              @if (registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched) {
+                <span class="invalid-feedback">{{ 'auth.invalidPhone' | translate }}</span>
+              }
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label class="form-label" for="reg-password">{{ 'auth.password' | translate }} *</label>
+              <div class="input-with-icon">
+                <input
+                  id="reg-password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="At least 6 characters"
+                  class="form-control"
+                  [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                />
+                <button type="button" class="password-toggle-btn" (click)="togglePassword()">
+                  @if (showPassword) {
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                    </svg>
+                  } @else {
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  }
+                </button>
+              </div>
+              @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                <span class="invalid-feedback">{{ 'auth.passMin' | translate }}</span>
+              }
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label class="form-label" for="reg-confirm">{{ 'auth.confirmPassword' | translate }} *</label>
+              <div class="input-with-icon">
+                <input
+                  id="reg-confirm"
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+                  placeholder="Re-enter password"
+                  class="form-control"
+                  [class.is-invalid]="
+                    (registerForm.get('confirmPassword')?.touched || registerForm.touched) &&
+                    registerForm.errors?.['passwordMismatch']
+                  "
+                />
+                <button type="button" class="password-toggle-btn" (click)="toggleConfirmPassword()">
+                  @if (showConfirmPassword) {
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                    </svg>
+                  } @else {
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  }
+                </button>
+              </div>
+              @if (
+                registerForm.errors?.['passwordMismatch'] &&
+                (registerForm.get('confirmPassword')?.touched || registerForm.get('confirmPassword')?.dirty)
+              ) {
+                <span class="invalid-feedback">{{ 'auth.passMismatch' | translate }}</span>
+              }
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-register-submit">
+              <span>{{ 'auth.registerBtn' | translate }}</span>
+              <span class="btn-arrow">→</span>
+            </button>
+          </form>
+
+          <div class="register-footer">
+            <p class="auth-switch-text">
+              <a routerLink="/login" class="auth-switch-link">{{ 'auth.hasAccount' | translate }}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

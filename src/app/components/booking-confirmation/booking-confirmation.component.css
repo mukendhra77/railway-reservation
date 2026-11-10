@@ -1,0 +1,572 @@
+.confirmation-page-wrapper {
+  background-color: var(--c-ivory);
+  min-height: calc(100vh - 120px);
+  padding: 3rem 0 5rem;
+}
+
+.confirmation-layout {
+  max-width: 900px;
+}
+
+/* Congrats Header (No-print) */
+.congrats-header-card {
+  margin-bottom: 2.5rem;
+  animation: slideInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.congrats-header-card.text-center {
+  text-align: center;
+}
+
+.success-check-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background-color: #046c4e;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(4, 108, 78, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+.congrats-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+  margin-bottom: 0.5rem;
+}
+
+.congrats-desc {
+  font-size: 1rem;
+  color: var(--c-charcoal-muted);
+  max-width: 620px;
+  margin: 0 auto 1.75rem;
+}
+
+.confirmation-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-print {
+  padding: 0.85rem 1.8rem;
+}
+
+/* ===================================================================
+   ATTRACTIVE DIGITAL TICKET INTERFACE
+   =================================================================== */
+.digital-ticket-wrapper {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-floating);
+  border: 2px solid var(--c-border-strong);
+  overflow: hidden;
+  position: relative;
+  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.ticket-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Strip */
+.ticket-header-strip {
+  background: linear-gradient(135deg, var(--c-forest-darkest) 0%, var(--c-forest) 100%);
+  color: #ffffff;
+  padding: 1.5rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ticket-seal-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seal-icon {
+  font-size: 2.2rem;
+}
+
+.ticket-org-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  display: block;
+  line-height: 1.1;
+}
+
+.ticket-type-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--c-orange);
+  text-transform: uppercase;
+}
+
+.ticket-stamp-box {
+  border: 2.5px solid var(--c-border-gold);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotate(-3deg);
+  background: rgba(203, 178, 139, 0.12);
+}
+
+.stamp-confirmed {
+  font-family: var(--font-cinzel);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--c-border-gold);
+  letter-spacing: 0.12em;
+}
+
+.stamp-sub {
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* PNR and Identifiers Banner */
+.ticket-pnr-banner {
+  background-color: var(--c-ivory-warm);
+  border-bottom: 1px solid var(--c-border-strong);
+  padding: 1.25rem 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pnr-item-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.pnr-label-text {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--c-forest);
+  letter-spacing: 0.12em;
+}
+
+.pnr-code-value {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--c-orange);
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+}
+
+.pnr-meta-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.pnr-meta-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+  letter-spacing: 0.08em;
+}
+
+.pnr-meta-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--c-charcoal);
+}
+
+.badge-status-confirmed {
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-full);
+  background-color: #def7ec;
+  color: #03543f;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  border: 1px solid #84e1bc;
+}
+
+/* Body */
+.ticket-journey-body {
+  padding: 2.25rem;
+}
+
+.ticket-train-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.train-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ticket-train-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-orange);
+  background: var(--c-orange-light);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+.ticket-train-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.ticket-class-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  background-color: var(--c-forest-subtle);
+  color: var(--c-forest);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.platform-info {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+  background: var(--c-ivory-warm);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-border);
+}
+
+/* Route Timing Grid */
+.ticket-timing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.timing-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.timing-col.to-col {
+  text-align: right;
+}
+
+.col-indicator {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--c-orange);
+  letter-spacing: 0.12em;
+}
+
+.col-time {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--c-forest-darkest);
+  line-height: 1.1;
+}
+
+.col-station-code {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+.col-station-name {
+  font-size: 0.95rem;
+  color: var(--c-charcoal);
+  font-weight: 600;
+}
+
+.col-date {
+  font-size: 0.8rem;
+  color: var(--c-charcoal-muted);
+  margin-top: 0.25rem;
+}
+
+.timing-track-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.ticket-route-line {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.4rem;
+}
+
+.route-point {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--c-forest);
+}
+
+.route-connector {
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--c-forest), var(--c-forest) 5px, transparent 5px, transparent 10px);
+}
+
+.route-train-emoji {
+  font-size: 1.3rem;
+}
+
+.overland-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-forest);
+  background: var(--c-forest-subtle);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+/* Perforated Divider with Notches */
+.ticket-perforated-divider {
+  position: relative;
+  margin: 1.5rem -2.25rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.notch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--c-ivory);
+  border: 2px solid var(--c-border-strong);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.notch-left {
+  left: -12px;
+}
+
+.notch-right {
+  right: -12px;
+}
+
+.perforation-dashes {
+  width: 100%;
+  height: 2px;
+  border-top: 2px dashed var(--c-border-strong);
+  margin: 0 1.5rem;
+}
+
+/* Manifest Table */
+.ticket-passengers-section {
+  margin: 1.5rem 0;
+}
+
+.manifest-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+  margin-bottom: 1rem;
+}
+
+.manifest-table-wrapper {
+  overflow-x: auto;
+}
+
+.manifest-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.manifest-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background-color: var(--c-ivory-warm);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--c-forest-dark);
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.manifest-table td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-charcoal);
+}
+
+.passenger-name-cell {
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.coach-badge {
+  font-weight: 800;
+  color: var(--c-orange);
+  background: var(--c-orange-light);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.seat-cell {
+  font-weight: 700;
+  color: var(--c-forest);
+}
+
+.status-cell-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #046c4e;
+}
+
+/* Footer Strip: Fare Breakdown & Barcode */
+.ticket-footer-strip {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.ticket-fare-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--c-ivory);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+}
+
+.fare-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.84rem;
+}
+
+.fare-label {
+  color: var(--c-charcoal-muted);
+}
+
+.fare-amt {
+  font-weight: 700;
+}
+
+.total-fare-row {
+  padding-top: 0.65rem;
+  margin-top: 0.35rem;
+  border-top: 1.5px solid var(--c-border-strong);
+}
+
+.fare-label-total {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--c-forest-darkest);
+}
+
+.fare-amt-total {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+/* Barcode */
+.ticket-barcode-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
+.simulated-qr {
+  color: var(--c-forest-darkest);
+}
+
+.simulated-barcode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.barcode-bars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 48px;
+}
+
+.b-thin { width: 1.5px; height: 100%; background: #111; }
+.b-med  { width: 3px; height: 100%; background: #111; }
+.b-thick { width: 4.5px; height: 100%; background: #111; }
+
+.barcode-number {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--c-charcoal-muted);
+}
+
+.ticket-legal-notice {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--c-charcoal-muted);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--c-border);
+}
+
+@media (max-width: 768px) {
+  .ticket-timing-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .timing-col.to-col {
+    text-align: center;
+  }
+
+  .ticket-footer-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-barcode-box {
+    justify-content: center;
+  }
+
+  .ticket-header-strip {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .ticket-seal-brand {
+    flex-direction: column;
+  }
+}

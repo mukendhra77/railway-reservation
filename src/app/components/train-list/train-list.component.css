@@ -1,0 +1,604 @@
+.train-list-page-wrapper {
+  background-color: var(--c-ivory);
+  min-height: calc(100vh - 120px);
+  padding-bottom: 5rem;
+}
+
+/* Top Summary Strip */
+.journey-summary-bar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--c-border);
+  padding: 1.1rem 0;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 72px;
+  z-index: 100;
+}
+
+.summary-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary-route {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.route-station {
+  padding: 0.25rem 0.65rem;
+  background-color: var(--c-forest-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--c-forest);
+  font-family: var(--font-mono);
+}
+
+.route-arrow {
+  color: var(--c-orange);
+  font-weight: 800;
+}
+
+.summary-date {
+  font-size: 0.92rem;
+  color: var(--c-charcoal-muted);
+  font-weight: 500;
+}
+
+.btn-modify-journey {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  background: var(--c-ivory-warm);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--c-forest);
+}
+
+.btn-modify-journey:hover {
+  background: var(--c-forest);
+  color: #ffffff;
+}
+
+/* Main Container */
+.main-list-container {
+  padding-top: 2rem;
+}
+
+/* Results & Filter Bar */
+.results-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.results-count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.count-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--c-forest);
+  font-family: var(--font-cinzel);
+}
+
+.count-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--c-charcoal-muted);
+}
+
+.filters-group-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Vande Bharat / High-Speed Quick Toggle Button */
+.vande-bharat-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  background: #fdf4ff;
+  border: 1.5px solid #d946ef;
+  color: #a21caf;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vande-bharat-filter-btn:hover {
+  background: #fae8ff;
+  transform: translateY(-1px);
+}
+
+.vande-bharat-filter-btn.active {
+  background: #a21caf;
+  color: #ffffff;
+  border-color: #a21caf;
+  box-shadow: 0 4px 12px rgba(162, 28, 175, 0.25);
+}
+
+.filter-check {
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+}
+
+.bolt-icon {
+  font-size: 1rem;
+}
+
+.departure-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.time-chip {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: #ffffff;
+  border: 1px solid var(--c-border-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-charcoal);
+  transition: var(--transition);
+}
+
+.time-chip:hover {
+  border-color: var(--c-forest);
+}
+
+.time-chip.active {
+  background-color: var(--c-forest);
+  color: #ffffff;
+  border-color: var(--c-forest);
+}
+
+/* Empty State */
+.no-trains-card {
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+}
+
+.empty-icon-box {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-title {
+  font-size: 1.5rem;
+  color: var(--c-forest-darkest);
+  margin-bottom: 0.5rem;
+}
+
+.empty-desc {
+  font-size: 0.95rem;
+  color: var(--c-charcoal-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* Stream of Horizontal Cards */
+.train-cards-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.train-horizontal-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--c-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: var(--transition);
+  animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.train-cards-stream .train-horizontal-card:nth-child(1) { animation-delay: 0.05s; }
+.train-cards-stream .train-horizontal-card:nth-child(2) { animation-delay: 0.12s; }
+.train-cards-stream .train-horizontal-card:nth-child(3) { animation-delay: 0.19s; }
+.train-cards-stream .train-horizontal-card:nth-child(4) { animation-delay: 0.26s; }
+.train-cards-stream .train-horizontal-card:nth-child(5) { animation-delay: 0.33s; }
+.train-cards-stream .train-horizontal-card:nth-child(6) { animation-delay: 0.40s; }
+
+.train-horizontal-card:hover {
+  border-color: var(--c-sage);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.train-horizontal-card.is-high-speed-card {
+  border-color: #ddd6fe;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.06);
+}
+
+/* Top Strip */
+.train-card-top-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--c-border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.train-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.badge-vande-bharat {
+  background: #ede9fe;
+  color: #7c3aed;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+}
+
+.badge-superfast-pill {
+  background: #e0e7ff;
+  color: #4f46e5;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.train-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-orange);
+  background: var(--c-orange-light);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.train-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.train-type-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: var(--c-forest-subtle);
+  color: var(--c-forest);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.train-runs-on {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.runs-label {
+  font-size: 0.75rem;
+  color: var(--c-charcoal-muted);
+  font-weight: 600;
+}
+
+.days-badges {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.day-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--c-ivory-warm);
+  color: #adb5bd;
+}
+
+.day-dot.active {
+  background-color: var(--c-forest);
+  color: #ffffff;
+}
+
+/* Timing & Route Visual */
+.journey-timing-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-block.arrival {
+  text-align: right;
+}
+
+.time-val {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+  line-height: 1.1;
+}
+
+.station-code {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--c-forest);
+  letter-spacing: 0.05em;
+}
+
+.station-name {
+  font-size: 0.82rem;
+  color: var(--c-charcoal-muted);
+}
+
+.timing-visual-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 1rem;
+}
+
+.duration-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--c-forest);
+  background: var(--c-forest-subtle);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.duration-badge.fast-duration {
+  background: #ede9fe;
+  color: #7c3aed;
+  font-weight: 800;
+}
+
+.fast-tag {
+  color: #a855f7;
+  font-weight: 800;
+}
+
+.track-line {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.35rem;
+}
+
+.track-node {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--c-forest);
+}
+
+.track-line-body {
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--c-forest), var(--c-forest) 5px, transparent 5px, transparent 10px);
+}
+
+.track-line-body.fast-body {
+  background: repeating-linear-gradient(90deg, #7c3aed, #7c3aed 6px, transparent 6px, transparent 10px);
+}
+
+.track-icon {
+  font-size: 1rem;
+  display: inline-block;
+  animation: trainGlider 2.4s ease-in-out infinite;
+}
+
+.distance-text {
+  font-size: 0.72rem;
+  color: var(--c-charcoal-muted);
+  font-family: var(--font-mono);
+}
+
+/* Highlight Line */
+.train-highlight-line {
+  background: var(--c-ivory-warm);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--c-forest-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.train-highlight-line.fast-highlight {
+  background: #f8fafc;
+  border: 1px solid #ede9fe;
+  color: #334155;
+}
+
+.highlight-star {
+  color: #7c3aed;
+  font-size: 1rem;
+}
+
+/* Classes & Fares Grid */
+.class-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.classes-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.classes-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.class-chip-card {
+  background: var(--c-ivory);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  text-align: left;
+  transition: var(--transition);
+}
+
+.class-chip-card:hover {
+  border-color: var(--c-forest);
+  background: #ffffff;
+}
+
+.class-chip-card.selected {
+  border-color: var(--c-orange);
+  background: var(--c-orange-light);
+  box-shadow: 0 4px 12px rgba(212, 95, 52, 0.15);
+}
+
+.chip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.chip-type {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--c-forest-darkest);
+}
+
+.badge-status {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #046c4e;
+  background: #def7ec;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.chip-name {
+  font-size: 0.72rem;
+  color: var(--c-charcoal-muted);
+  margin-bottom: 0.35rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip-fare {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+/* Bottom Action Row */
+.train-card-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--c-border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.selected-fare-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.fare-note {
+  font-size: 0.84rem;
+  color: var(--c-charcoal-muted);
+}
+
+.total-fare-highlight {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+.seat-avail-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #046c4e;
+}
+
+.btn-book-train {
+  padding: 0.75rem 1.6rem;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 800px) {
+  .journey-timing-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .time-block.arrival {
+    text-align: center;
+  }
+
+  .train-card-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-book-train {
+    width: 100%;
+  }
+
+  .filters-group-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

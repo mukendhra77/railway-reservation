@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="navBrand" datatype="html">
+        <source>YĀTRĀ RAIL</source>
+      </trans-unit>
+      <trans-unit id="navBrandSub" datatype="html">
+        <source>THE OVERLAND JOURNAL</source>
+      </trans-unit>
+      <trans-unit id="navSearch" datatype="html">
+        <source>Search Trains</source>
+      </trans-unit>
+      <trans-unit id="navPnr" datatype="html">
+        <source>PNR Status</source>
+      </trans-unit>
+      <trans-unit id="navMyBookings" datatype="html">
+        <source>My Bookings</source>
+      </trans-unit>
+      <trans-unit id="navSignIn" datatype="html">
+        <source>Sign In</source>
+      </trans-unit>
+      <trans-unit id="navRegister" datatype="html">
+        <source>Register</source>
+      </trans-unit>
+      <trans-unit id="heroBadge" datatype="html">
+        <source>ESTD. 1853 • INDIAN OVERLAND EXPEDITIONS</source>
+      </trans-unit>
+      <trans-unit id="heroTitle" datatype="html">
+        <source>Slow Journeys, Timeless Tracks</source>
+      </trans-unit>
+      <trans-unit id="heroSubtitle" datatype="html">
+        <source>Experience the soul of Indian landscapes through vintage corridors, panoramic vista-domes, and seamless digital reservations.</source>
+      </trans-unit>
+      <trans-unit id="panelTitle" datatype="html">
+        <source>Plan Your Expedition</source>
+      </trans-unit>
+      <trans-unit id="panelFrom" datatype="html">
+        <source>From Station</source>
+      </trans-unit>
+      <trans-unit id="panelTo" datatype="html">
+        <source>To Station</source>
+      </trans-unit>
+      <trans-unit id="panelDate" datatype="html">
+        <source>Journey Date</source>
+      </trans-unit>
+      <trans-unit id="panelSearchBtn" datatype="html">
+        <source>Search Available Trains</source>
+      </trans-unit>
+      <trans-unit id="bookingTitle" datatype="html">
+        <source>Passenger Reservation</source>
+      </trans-unit>
+      <trans-unit id="confirmCongrats" datatype="html">
+        <source>Booking Confirmed!</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

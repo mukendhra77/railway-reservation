@@ -1,0 +1,533 @@
+.my-bookings-page-wrapper {
+  background-color: var(--c-ivory);
+  min-height: calc(100vh - 120px);
+  padding: 3.5rem 0 5rem;
+}
+
+.bookings-layout {
+  max-width: 980px;
+}
+
+.bookings-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  animation: slideInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.editorial-chip {
+  display: inline-block;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-full);
+  background-color: var(--c-forest-subtle);
+  color: var(--c-forest);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.page-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+  margin-bottom: 0.35rem;
+}
+
+.page-subtitle {
+  font-size: 0.95rem;
+  color: var(--c-charcoal-muted);
+}
+
+.btn-plan-new {
+  padding: 0.75rem 1.6rem;
+  font-size: 0.9rem;
+}
+
+/* Empty State */
+.empty-bookings-card {
+  background: #ffffff;
+  padding: 4rem 2rem;
+  border-radius: var(--radius-xl);
+}
+
+.empty-train-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-title {
+  font-size: 1.6rem;
+  color: var(--c-forest-darkest);
+  margin-bottom: 0.5rem;
+}
+
+.empty-desc {
+  font-size: 0.95rem;
+  color: var(--c-charcoal-muted);
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Stream of Ticket Cards */
+.bookings-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.ticket-style-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  border: 1.5px solid var(--c-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: var(--transition);
+  position: relative;
+  animation: slideInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.bookings-stream .ticket-style-card:nth-child(1) { animation-delay: 0.05s; }
+.bookings-stream .ticket-style-card:nth-child(2) { animation-delay: 0.15s; }
+.bookings-stream .ticket-style-card:nth-child(3) { animation-delay: 0.25s; }
+.bookings-stream .ticket-style-card:nth-child(4) { animation-delay: 0.35s; }
+
+.ticket-style-card:hover {
+  border-color: var(--c-forest);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.ticket-style-card.is-cancelled {
+  opacity: 0.82;
+  background-color: #fafaf9;
+  border-color: #e5e7eb;
+}
+
+/* PNR Strip */
+.card-pnr-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--c-border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pnr-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.pnr-title-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+}
+
+.pnr-code-badge {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--c-orange);
+  letter-spacing: 0.08em;
+}
+
+.ticket-date-tag {
+  font-size: 0.78rem;
+  color: var(--c-charcoal-muted);
+}
+
+.status-confirmed-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: #def7ec;
+  color: #03543f;
+  border: 1px solid #84e1bc;
+}
+
+.status-cancelled-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: #fde8e8;
+  color: #9b1c1c;
+  border: 1px solid #f8b4b4;
+}
+
+/* Journey Grid */
+.card-journey-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.journey-train-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-train-num {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--c-orange);
+}
+
+.card-train-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.card-class-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-forest);
+  background-color: var(--c-forest-subtle);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  align-self: flex-start;
+}
+
+.journey-route-col {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.station-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.station-side.dest {
+  text-align: right;
+}
+
+.station-side-code {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+.station-side-time {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.station-side-name {
+  font-size: 0.78rem;
+  color: var(--c-charcoal-muted);
+}
+
+.route-center-graphic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+}
+
+.travel-date-badge {
+  font-size: 0.72rem;
+  color: var(--c-charcoal-muted);
+}
+
+.arrow-line {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.a-line {
+  flex: 1;
+  height: 2px;
+  background: var(--c-border-strong);
+}
+
+.a-train {
+  font-size: 0.9rem;
+}
+
+.platform-tag {
+  font-size: 0.68rem;
+  color: var(--c-charcoal-muted);
+  background: var(--c-ivory-warm);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Passenger Roster */
+.card-passengers-strip {
+  background: var(--c-ivory);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.passengers-strip-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+}
+
+.passengers-roster-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.passenger-tag {
+  font-size: 0.78rem;
+  color: var(--c-forest-dark);
+  font-weight: 600;
+  background: #ffffff;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-border);
+}
+
+/* Bottom Bar */
+.card-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--c-border);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.fare-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.fare-paid-label {
+  font-size: 0.85rem;
+  color: var(--c-charcoal-muted);
+}
+
+.fare-paid-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--c-forest);
+}
+
+.refund-credited-badge {
+  font-size: 0.75rem;
+  color: #046c4e;
+  font-weight: 700;
+}
+
+.card-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-view-ticket {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.btn-cancel-ticket {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid #f8b4b4;
+  border-radius: var(--radius-md);
+  background: #fdf2f2;
+  color: #c81e1e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-cancel-ticket:hover {
+  background: #fde8e8;
+  border-color: #f05252;
+}
+
+/* Modal Styles */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 36, 29, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  max-width: 500px;
+  width: 100%;
+  padding: 2.25rem;
+  box-shadow: var(--shadow-floating);
+  animation: modalEnter 0.25s ease-out;
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.modal-icon-warning {
+  font-size: 1.6rem;
+}
+
+.modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--c-forest-darkest);
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  color: var(--c-charcoal);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.refund-calculation-box {
+  background: var(--c-ivory);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border);
+  margin-bottom: 1rem;
+}
+
+.calc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--c-charcoal-muted);
+  margin-bottom: 0.35rem;
+}
+
+.calc-row.total-refund {
+  color: var(--c-forest-darkest);
+  font-weight: 700;
+}
+
+.text-danger {
+  color: #c81e1e;
+}
+
+.refund-sum {
+  font-size: 1.25rem;
+  color: #046c4e;
+  font-weight: 800;
+}
+
+.calc-divider {
+  height: 1px;
+  background-color: var(--c-border-strong);
+  margin: 0.5rem 0;
+}
+
+.modal-refund-policy {
+  font-size: 0.78rem;
+  color: var(--c-charcoal-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+
+.cancellation-alert-success {
+  background: #def7ec;
+  border: 1px solid #84e1bc;
+  color: #03543f;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.modal-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn-danger-confirm {
+  padding: 0.75rem 1.4rem;
+  background-color: #c81e1e;
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.btn-danger-confirm:hover {
+  background-color: #9b1c1c;
+}
+
+@media (max-width: 800px) {
+  .card-journey-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .journey-route-col {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .station-side.dest {
+    text-align: center;
+  }
+
+  .card-bottom-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-buttons-group {
+    flex-direction: column;
+  }
+
+  .card-buttons-group button {
+    width: 100%;
+    justify-content: center;
+  }
+}

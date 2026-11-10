@@ -1,0 +1,189 @@
+<div class="pnr-page-wrapper">
+  <div class="container pnr-layout">
+    <!-- Header -->
+    <div class="pnr-header-box text-center">
+      <span class="editorial-chip">{{ 'hero.badge' | translate }}</span>
+      <h1 class="pnr-title font-serif">{{ 'pnr.title' | translate }}</h1>
+      <p class="pnr-subtitle">{{ 'pnr.subtitle' | translate }}</p>
+    </div>
+
+    <!-- Search Input Panel -->
+    <div class="pnr-search-card card-editorial">
+      <form (ngSubmit)="onSearchPnr()" class="pnr-form">
+        <label class="pnr-input-label" for="pnrNumber">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M7 15h0M2 9h20"></path>
+          </svg>
+          <span>{{ 'pnr.inputLabel' | translate }}</span>
+        </label>
+
+        <div class="pnr-input-row">
+          <div class="pnr-field-wrapper">
+            <input
+              id="pnrNumber"
+              type="text"
+              name="pnrNumber"
+              [(ngModel)]="pnrInput"
+              [placeholder]="'pnr.inputPlaceholder' | translate"
+              maxlength="10"
+              class="form-control pnr-text-input font-mono"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn-primary btn-pnr-search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>{{ 'pnr.checkBtn' | translate }}</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Quick Sample PNR helper chips for easy evaluator testing -->
+      @if (samplePnrs.length > 0) {
+        <div class="sample-pnrs-strip">
+          <span class="sample-pnr-label">{{ 'pnr.samplePnrs' | translate }}</span>
+          <div class="sample-pnr-chips">
+            @for (pnr of samplePnrs; track pnr) {
+              <button
+                type="button"
+                class="sample-chip font-mono"
+                (click)="fillSamplePnr(pnr)"
+              >
+                {{ pnr }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Error State: PNR Not Found -->
+    @if (searchAttempted && !foundBooking) {
+      <div class="pnr-error-card card-editorial text-center">
+        <div class="error-badge-icon">⚠️</div>
+        <h3 class="error-title font-serif">{{ 'pnr.notFound' | translate }} "{{ pnrInput }}"</h3>
+        <p class="error-tip">{{ 'pnr.notFoundTip' | translate }}</p>
+        <div class="error-action-row">
+          <a routerLink="/search" class="btn-primary">Reserve a Train Seat</a>
+        </div>
+      </div>
+    }
+
+    <!-- Result State: PNR Found and Rendered -->
+    @if (foundBooking) {
+      <div class="pnr-result-section">
+        <div class="result-card-banner">
+          <div class="banner-top-strip">
+            <div class="banner-pnr-block">
+              <span class="pnr-tag-label">PNR IDENTIFIER</span>
+              <span class="pnr-tag-value font-mono">{{ foundBooking.pnr }}</span>
+            </div>
+
+            <div class="banner-chart-status">
+              <span class="chart-bullet"></span>
+              <span>Chart Status: <strong>CHART PREPARED</strong></span>
+            </div>
+
+            <div class="banner-status-badge">
+              @if (foundBooking.bookingStatus === 'CONFIRMED') {
+                <span class="status-confirmed-pill">CONFIRMED (CNF)</span>
+              } @else {
+                <span class="status-cancelled-pill">CANCELLED</span>
+              }
+            </div>
+          </div>
+
+          <!-- Train & Route Breakdown -->
+          <div class="result-journey-details">
+            <div class="result-train-title-row">
+              <span class="train-no-chip font-mono">#{{ foundBooking.trainNumber }}</span>
+              <h2 class="train-display-name font-serif">{{ foundBooking.trainName }}</h2>
+              <span class="train-type-badge">{{ foundBooking.trainType }}</span>
+              <span class="class-spec-badge">{{ foundBooking.className }} ({{ foundBooking.travelClass }})</span>
+            </div>
+
+            <div class="result-route-grid">
+              <div class="route-point-block from">
+                <span class="point-code">{{ foundBooking.fromStationCode }}</span>
+                <span class="point-time font-mono">{{ foundBooking.departureTime }}</span>
+                <span class="point-name">{{ foundBooking.fromStationName }}</span>
+                <span class="point-date font-mono">{{ translationService.formatDate(foundBooking.journeyDate) }}</span>
+              </div>
+
+              <div class="route-center-line">
+                <div class="train-track-anim">
+                  <span class="node start"></span>
+                  <span class="track-dashed"></span>
+                  <span class="icon">🚆</span>
+                  <span class="track-dashed"></span>
+                  <span class="node end"></span>
+                </div>
+                <span class="track-platform-tag">{{ foundBooking.platform || 'Platform 2' }}</span>
+              </div>
+
+              <div class="route-point-block to">
+                <span class="point-code">{{ foundBooking.toStationCode }}</span>
+                <span class="point-time font-mono">{{ foundBooking.arrivalTime }}</span>
+                <span class="point-name">{{ foundBooking.toStationName }}</span>
+                <span class="point-date font-mono">{{ translationService.formatDate(foundBooking.journeyDate) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Passenger Allocated Roster -->
+          <div class="result-passenger-roster">
+            <h4 class="roster-title font-serif">Passenger Berth Allocation</h4>
+            <div class="roster-table-wrapper">
+              <table class="roster-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PASSENGER NAME</th>
+                    <th>AGE / GENDER</th>
+                    <th>COACH</th>
+                    <th>BERTH ALLOCATED</th>
+                    <th>CURRENT STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (p of foundBooking.passengers; track $index) {
+                    <tr>
+                      <td class="font-mono">{{ $index + 1 }}</td>
+                      <td class="font-semibold">{{ p.name }}</td>
+                      <td>{{ p.age }} Yrs / {{ p.gender }}</td>
+                      <td>
+                        <span class="coach-tag font-mono">{{ p.allocatedCoach }}</span>
+                      </td>
+                      <td class="font-mono font-bold text-forest">{{ p.allocatedSeat }}</td>
+                      <td>
+                        <span class="confirmed-tag">CNF / Confirmed</span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Bottom Footer Action -->
+          <div class="result-footer-bar">
+            <div class="fare-paid-summary">
+              <span class="label">Total Paid Fare:</span>
+              <span class="amount font-serif">{{ translationService.formatCurrency(foundBooking.totalFare) }}</span>
+            </div>
+
+            <div class="action-links">
+              <a [routerLink]="['/confirmation', foundBooking.pnr]" class="btn-primary">
+                View & Print Official Digital Pass
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

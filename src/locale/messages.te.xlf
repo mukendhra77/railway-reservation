@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="te" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="navBrand" datatype="html">
+        <source>YĀTRĀ RAIL</source>
+        <target>యాత్రా రైల్</target>
+      </trans-unit>
+      <trans-unit id="navBrandSub" datatype="html">
+        <source>THE OVERLAND JOURNAL</source>
+        <target>రైలు ప్రయాణ జర్నల్</target>
+      </trans-unit>
+      <trans-unit id="navSearch" datatype="html">
+        <source>Search Trains</source>
+        <target>రైళ్లను వెతకండి</target>
+      </trans-unit>
+      <trans-unit id="navPnr" datatype="html">
+        <source>PNR Status</source>
+        <target>పీఎన్ఆర్ స్థితి</target>
+      </trans-unit>
+      <trans-unit id="navMyBookings" datatype="html">
+        <source>My Bookings</source>
+        <target>నా బుకింగ్‌లు</target>
+      </trans-unit>
+      <trans-unit id="navSignIn" datatype="html">
+        <source>Sign In</source>
+        <target>లాగిన్</target>
+      </trans-unit>
+      <trans-unit id="navRegister" datatype="html">
+        <source>Register</source>
+        <target>నమోదు చేసుకోండి</target>
+      </trans-unit>
+      <trans-unit id="heroBadge" datatype="html">
+        <source>ESTD. 1853 • INDIAN OVERLAND EXPEDITIONS</source>
+        <target>స్థాపితం 1853 • భారతీయ రైలు యాత్రలు</target>
+      </trans-unit>
+      <trans-unit id="heroTitle" datatype="html">
+        <source>Slow Journeys, Timeless Tracks</source>
+        <target>ప్రశాంతమైన ప్రయాణాలు, అద్భుతమైన మార్గాలు</target>
+      </trans-unit>
+      <trans-unit id="heroSubtitle" datatype="html">
+        <source>Experience the soul of Indian landscapes through vintage corridors, panoramic vista-domes, and seamless digital reservations.</source>
+        <target>ప్రాచీన రైలు మార్గాలు, సుందరమైన దృశ్యాలు మరియు సులభమైన డిజిటల్ టిక్కెట్ రిజర్వేషన్లతో భారతదేశ అందాలను అనుభవించండి.</target>
+      </trans-unit>
+      <trans-unit id="panelTitle" datatype="html">
+        <source>Plan Your Expedition</source>
+        <target>మీ ప్రయాణాన్ని ప్లాన్ చేసుకోండి</target>
+      </trans-unit>
+      <trans-unit id="panelFrom" datatype="html">
+        <source>From Station</source>
+        <target>బయలుదేరే స్టేషన్</target>
+      </trans-unit>
+      <trans-unit id="panelTo" datatype="html">
+        <source>To Station</source>
+        <target>చేరుకునే స్టేషన్</target>
+      </trans-unit>
+      <trans-unit id="panelDate" datatype="html">
+        <source>Journey Date</source>
+        <target>ప్రయాణ తేదీ</target>
+      </trans-unit>
+      <trans-unit id="panelSearchBtn" datatype="html">
+        <source>Search Available Trains</source>
+        <target>లభ్యతలో ఉన్న రైళ్లను వెతకండి</target>
+      </trans-unit>
+      <trans-unit id="bookingTitle" datatype="html">
+        <source>Passenger Reservation</source>
+        <target>ప్రయాణికుల రిజర్వేషన్</target>
+      </trans-unit>
+      <trans-unit id="confirmCongrats" datatype="html">
+        <source>Booking Confirmed!</source>
+        <target>బుకింగ్ విజయవంతంగా పూర్తయింది!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

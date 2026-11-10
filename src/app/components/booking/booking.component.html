@@ -1,0 +1,282 @@
+<div class="booking-page-wrapper">
+  <div class="container booking-grid-layout">
+    <!-- Left Column: Train Info & Passenger Forms -->
+    <div class="booking-main-col">
+      <!-- Breadcrumb / Header -->
+      <div class="booking-header-box">
+        <span class="editorial-chip">{{ 'hero.badge' | translate }}</span>
+        <h1 class="booking-title font-serif">{{ 'booking.title' | translate }}</h1>
+        <p class="booking-subtitle">{{ 'booking.subtitle' | translate }}</p>
+      </div>
+
+      <!-- Selected Train Overview Card -->
+      <div class="train-summary-card card-editorial">
+        <div class="train-summary-top">
+          <div class="summary-train-title">
+            <span class="summary-train-no font-mono">#{{ train.trainNumber }}</span>
+            <h3 class="summary-train-name font-serif">{{ train.trainName }}</h3>
+            <span class="summary-train-type">{{ train.trainType }}</span>
+          </div>
+          <span class="summary-badge-confirmed">CONFIRMED SEATS AVAILABLE</span>
+        </div>
+
+        <div class="summary-route-grid">
+          <div class="summary-station-point">
+            <span class="point-label">ORIGIN</span>
+            <span class="point-code">{{ train.fromStationCode }}</span>
+            <span class="point-name">{{ train.fromStationName }}</span>
+            <span class="point-time font-mono">{{ train.departureTime }}</span>
+          </div>
+
+          <div class="summary-duration-box">
+            <span class="duration-pill font-mono">{{ train.duration }}</span>
+            <div class="duration-arrow">⟶</div>
+            <span class="journey-date-tag">{{ translationService.formatDate(journeyDate) }}</span>
+          </div>
+
+          <div class="summary-station-point destination">
+            <span class="point-label">DESTINATION</span>
+            <span class="point-code">{{ train.toStationCode }}</span>
+            <span class="point-name">{{ train.toStationName }}</span>
+            <span class="point-time font-mono">{{ train.arrivalTime }}</span>
+          </div>
+        </div>
+
+        <!-- Class Selector Switcher inside booking page -->
+        <div class="class-picker-strip">
+          <span class="class-picker-label">Selected Class:</span>
+          <div class="class-picker-options">
+            @for (cls of train.classes; track cls.type) {
+              <button
+                type="button"
+                class="class-option-btn"
+                [class.active]="selectedClass === cls.type"
+                (click)="changeClass(cls.type)"
+              >
+                <span class="opt-type font-mono">{{ cls.type }}</span>
+                <span class="opt-fare">{{ translationService.formatCurrency(cls.fare) }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Passenger Information Form -->
+      <form [formGroup]="bookingForm" (ngSubmit)="onConfirmBooking()">
+        <div class="passengers-section-card card-editorial">
+          <div class="passengers-header">
+            <div class="passengers-title-group">
+              <h3 class="passengers-heading font-serif">{{ 'booking.passengerInfo' | translate }}</h3>
+              <span class="passengers-count-badge font-mono">
+                {{ passengersArray.length }} / 4 Passengers
+              </span>
+            </div>
+          </div>
+
+          <div formArrayName="passengers" class="passengers-list">
+            @for (passenger of passengersArray.controls; track $index) {
+              <div [formGroupName]="$index" class="passenger-item-card">
+                <div class="passenger-card-header">
+                  <span class="passenger-number-pill">
+                    {{ 'booking.passengerNum' | translate }} {{ $index + 1 }}
+                  </span>
+                  @if (passengersArray.length > 1) {
+                    <button
+                      type="button"
+                      class="btn-remove-passenger"
+                      (click)="removePassenger($index)"
+                      title="Remove Passenger"
+                    >
+                      ✕ {{ 'booking.removePassenger' | translate }}
+                    </button>
+                  }
+                </div>
+
+                <div class="passenger-fields-grid">
+                  <!-- Name -->
+                  <div class="form-group field-passenger-name">
+                    <label class="form-label">{{ 'booking.fullName' | translate }} *</label>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      placeholder="e.g. Aarav Sharma"
+                      class="form-control"
+                      [class.is-invalid]="passenger.get('name')?.invalid && passenger.get('name')?.touched"
+                    />
+                    @if (passenger.get('name')?.invalid && passenger.get('name')?.touched) {
+                      <span class="invalid-feedback">Please enter full name (min 3 characters).</span>
+                    }
+                  </div>
+
+                  <!-- Age -->
+                  <div class="form-group field-passenger-age">
+                    <label class="form-label">{{ 'booking.age' | translate }} *</label>
+                    <input
+                      type="number"
+                      formControlName="age"
+                      min="1"
+                      max="120"
+                      class="form-control"
+                      [class.is-invalid]="passenger.get('age')?.invalid && passenger.get('age')?.touched"
+                    />
+                    @if (passenger.get('age')?.invalid && passenger.get('age')?.touched) {
+                      <span class="invalid-feedback">Valid age required.</span>
+                    }
+                  </div>
+
+                  <!-- Gender -->
+                  <div class="form-group field-passenger-gender">
+                    <label class="form-label">{{ 'booking.gender' | translate }}</label>
+                    <select formControlName="gender" class="form-select">
+                      <option value="Male">{{ 'booking.male' | translate }}</option>
+                      <option value="Female">{{ 'booking.female' | translate }}</option>
+                      <option value="Other">{{ 'booking.other' | translate }}</option>
+                    </select>
+                  </div>
+
+                  <!-- Berth Preference -->
+                  <div class="form-group field-passenger-berth">
+                    <label class="form-label">{{ 'booking.berth' | translate }}</label>
+                    <select formControlName="berthPreference" class="form-select">
+                      <option value="No Preference">{{ 'booking.noPref' | translate }}</option>
+                      <option value="Lower">{{ 'booking.lower' | translate }}</option>
+                      <option value="Middle">{{ 'booking.middle' | translate }}</option>
+                      <option value="Upper">{{ 'booking.upper' | translate }}</option>
+                      <option value="Side Lower">{{ 'booking.sideLower' | translate }}</option>
+                      <option value="Side Upper">{{ 'booking.sideUpper' | translate }}</option>
+                      <option value="Window">{{ 'booking.window' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Add Passenger Button -->
+          <div class="add-passenger-row">
+            @if (passengersArray.length < 4) {
+              <button
+                type="button"
+                class="btn-secondary btn-add-passenger"
+                (click)="addPassenger()"
+              >
+                {{ 'booking.addPassenger' | translate }}
+              </button>
+            } @else {
+              <span class="max-passenger-text">
+                {{ 'booking.maxPassengerAlert' | translate }}
+              </span>
+            }
+          </div>
+
+          <!-- Optional Catering Toggle Card -->
+          <div class="catering-toggle-box">
+            <div class="catering-info">
+              <span class="catering-icon">🍱</span>
+              <div>
+                <h4 class="catering-title">{{ 'booking.catering' | translate }}</h4>
+                <p class="catering-desc">
+                  Curated hot regional meal, artisanal masala chai, and packaged mineral water (+₹250/passenger).
+                </p>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                [checked]="includeCatering"
+                (change)="toggleCatering()"
+              />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button in Mobile view -->
+        <div class="mobile-submit-container">
+          <button type="submit" class="btn-primary btn-confirm-ticket">
+            <span>{{ 'booking.confirmBtn' | translate }}</span>
+            <span class="total-pay font-mono">{{ translationService.formatCurrency(grandTotal) }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column: Fare Calculation & Summary Sticky Card -->
+    <div class="booking-sidebar-col">
+      <div class="fare-calculation-card card-editorial sticky-card">
+        <div class="fare-card-header">
+          <span class="fare-badge-icon">🧾</span>
+          <h3 class="fare-card-title font-serif">{{ 'booking.fareBreakdown' | translate }}</h3>
+        </div>
+
+        <div class="fare-breakdown-list">
+          <div class="fare-line-item">
+            <span class="item-name">
+              {{ 'booking.baseFare' | translate }} ({{ getSelectedClassObj().name }} × {{ passengersArray.length }})
+            </span>
+            <span class="item-value font-mono">
+              {{ translationService.formatCurrency(baseFareTotal) }}
+            </span>
+          </div>
+
+          @if (includeCatering) {
+            <div class="fare-line-item">
+              <span class="item-name">
+                {{ 'booking.catering' | translate }} (₹250 × {{ passengersArray.length }})
+              </span>
+              <span class="item-value font-mono">
+                {{ translationService.formatCurrency(cateringTotal) }}
+              </span>
+            </div>
+          }
+
+          <div class="fare-line-item">
+            <span class="item-name">{{ 'booking.convenienceFee' | translate }}</span>
+            <span class="item-value font-mono">
+              {{ translationService.formatCurrency(convenienceFee) }}
+            </span>
+          </div>
+
+          <div class="fare-divider"></div>
+
+          <div class="fare-total-item">
+            <div class="total-label-box">
+              <span class="total-label">{{ 'booking.totalPayable' | translate }}</span>
+              <span class="tax-inclusive-tag">All taxes included</span>
+            </div>
+            <span class="total-amount font-serif">
+              {{ translationService.formatCurrency(grandTotal) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="booking-guarantee-box">
+          <div class="guarantee-line">
+            <span class="check-icon">✓</span>
+            <span>Instant 10-Digit PNR & Digital Pass</span>
+          </div>
+          <div class="guarantee-line">
+            <span class="check-icon">✓</span>
+            <span>Seat & Coach Assigned Immediately</span>
+          </div>
+          <div class="guarantee-line">
+            <span class="check-icon">✓</span>
+            <span>80% Refund Policy on Cancellation</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="onConfirmBooking()"
+          class="btn-primary btn-confirm-ticket desktop-only"
+        >
+          <span>{{ 'booking.confirmBtn' | translate }}</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

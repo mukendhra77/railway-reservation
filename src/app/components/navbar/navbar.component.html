@@ -1,0 +1,179 @@
+<header class="navbar-wrapper">
+  <!-- Top Status Strip -->
+  <div class="navbar-top-strip">
+    <div class="container strip-inner">
+      <span class="strip-text">
+        <span class="strip-dot"></span>
+        YĀTRĀ RAIL • LIVE HIGH-SPEED OVERLAND DISPATCH
+      </span>
+      <div class="strip-meta">
+        <span class="live-clock font-mono">ACADEMIC EDITION • ANGULAR 22 STANDALONE</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="container navbar-container">
+    <!-- Modern Yātrā Rail Brand Logo -->
+    <a routerLink="/" class="brand-link" (click)="closeMobileMenu()">
+      <div class="brand-icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 14V8C4 5.2 6.5 3 12 3C17.5 3 20 5.2 20 8V14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4 11H20" stroke="#ffffff" stroke-width="1.8"/>
+          <circle cx="8" cy="15" r="1.5" fill="#ffffff"/>
+          <circle cx="16" cy="15" r="1.5" fill="#ffffff"/>
+          <path d="M6 18.5L3 21.5M18 18.5L21 21.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M9 7H15" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title-row">
+          <span class="brand-title">Yātrā<span class="brand-accent">Rail</span></span>
+          <span class="brand-tag-live">SMART</span>
+        </div>
+        <span class="brand-sub">{{ 'nav.brandSub' | translate }}</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links-desktop">
+      <a routerLink="/search" routerLinkActive="active-link" class="nav-link">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        {{ 'nav.search' | translate }}
+      </a>
+      <a routerLink="/pnr-status" routerLinkActive="active-link" class="nav-link">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        {{ 'nav.pnr' | translate }}
+      </a>
+      <a routerLink="/my-bookings" routerLinkActive="active-link" class="nav-link">
+        <svg class="nav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        {{ 'nav.myBookings' | translate }}
+      </a>
+    </div>
+
+    <!-- Right Controls: Language Selector & Auth -->
+    <div class="nav-actions-desktop">
+      <!-- Language Selection Dropdown -->
+      <div class="lang-selector-wrapper">
+        <button class="lang-btn" (click)="toggleLangDropdown()" aria-label="Select Language">
+          <span class="globe-icon">🌐</span>
+          <span class="current-lang-code">{{ translationService.currentLang() | uppercase }}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        @if (isLangDropdownOpen()) {
+          <div class="lang-dropdown-menu">
+            @for (lang of translationService.supportedLanguages; track lang.code) {
+              <button
+                class="lang-item"
+                [class.selected]="translationService.currentLang() === lang.code"
+                (click)="selectLanguage(lang.code)"
+              >
+                <span class="lang-native">{{ lang.nativeLabel }}</span>
+                <span class="lang-latin">({{ lang.label }})</span>
+                @if (translationService.currentLang() === lang.code) {
+                  <span class="lang-check">✓</span>
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Auth Controls -->
+      @if (authService.currentUser(); as user) {
+        <div class="user-profile-badge">
+          <div class="user-avatar">{{ user.name.charAt(0) }}</div>
+          <div class="user-meta">
+            <span class="user-greeting">{{ 'nav.welcome' | translate }}</span>
+            <span class="user-name">{{ user.name }}</span>
+          </div>
+          <button class="btn-logout" (click)="onLogout()" title="Logout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      } @else {
+        <div class="auth-buttons-group">
+          <a routerLink="/login" class="nav-signin-link">{{ 'nav.signIn' | translate }}</a>
+          <a routerLink="/register" class="btn-luma-register">{{ 'nav.register' | translate }}</a>
+        </div>
+      }
+    </div>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="mobile-toggle-btn" (click)="toggleMobileMenu()" aria-label="Toggle navigation">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        @if (isMobileMenuOpen()) {
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        } @else {
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        }
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-drawer">
+      <div class="mobile-links">
+        <a routerLink="/search" (click)="closeMobileMenu()" class="mobile-nav-link">
+          {{ 'nav.search' | translate }}
+        </a>
+        <a routerLink="/pnr-status" (click)="closeMobileMenu()" class="mobile-nav-link">
+          {{ 'nav.pnr' | translate }}
+        </a>
+        <a routerLink="/my-bookings" (click)="closeMobileMenu()" class="mobile-nav-link">
+          {{ 'nav.myBookings' | translate }}
+        </a>
+      </div>
+
+      <div class="mobile-lang-row">
+        <span class="mobile-section-label">Language / భాష / भाषा:</span>
+        <div class="mobile-lang-buttons">
+          @for (lang of translationService.supportedLanguages; track lang.code) {
+            <button
+              class="mobile-lang-chip"
+              [class.active]="translationService.currentLang() === lang.code"
+              (click)="selectLanguage(lang.code)"
+            >
+              {{ lang.nativeLabel }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="mobile-auth-section">
+        @if (authService.currentUser(); as user) {
+          <div class="mobile-user-card">
+            <span class="user-name">{{ user.name }} ({{ user.email }})</span>
+            <button class="btn-secondary" (click)="onLogout()">{{ 'nav.logout' | translate }}</button>
+          </div>
+        } @else {
+          <div class="mobile-guest-buttons">
+            <a routerLink="/login" (click)="closeMobileMenu()" class="btn-secondary">{{ 'nav.signIn' | translate }}</a>
+            <a routerLink="/register" (click)="closeMobileMenu()" class="btn-luma-register">{{ 'nav.register' | translate }}</a>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</header>

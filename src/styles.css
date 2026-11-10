@@ -1,0 +1,477 @@
+/* ===================================================================
+   LUMARAIL • SMART HIGH-SPEED DISPATCH & RAIL JOURNAL
+   Modern Electric Indigo & Royal Violet Design System
+   Academic Assignment Project
+   =================================================================== */
+
+:root {
+  /* Brand Palette: Electric Indigo, Royal Violet, Obsidian Slate, Soft Lavender */
+  --c-primary: #6366f1;
+  --c-primary-hover: #4f46e5;
+  --c-primary-dark: #4338ca;
+  --c-primary-light: #e0e7ff;
+  --c-primary-subtle: #eef2ff;
+
+  --c-violet: #7c3aed;
+  --c-violet-hover: #6d28d9;
+  --c-violet-light: #ede9fe;
+  --c-violet-subtle: #f5f3ff;
+  --c-violet-glow: rgba(124, 58, 237, 0.22);
+
+  --c-obsidian: #1e242b;
+  --c-obsidian-hover: #0f141a;
+  --c-slate-dark: #0f172a;
+  --c-slate-card: #ffffff;
+
+  --c-bg: #f8f9fd;
+  --c-bg-warm: #f1f4fa;
+  --c-bg-card: #ffffff;
+
+  --c-emerald: #10b981;
+  --c-emerald-dark: #047857;
+  --c-emerald-light: #dcfce7;
+  --c-emerald-soft: #ecfdf5;
+
+  --c-amber: #f59e0b;
+  --c-amber-light: #fef3c7;
+
+  --c-charcoal: #1e293b;
+  --c-charcoal-muted: #64748b;
+  --c-charcoal-light: #94a3b8;
+
+  --c-border: #e2e8f0;
+  --c-border-strong: #cbd5e1;
+  --c-border-subtle: #f1f5f9;
+
+  /* Aliases for legacy component compatibility */
+  --c-forest-darkest: #0f172a;
+  --c-forest-dark: #1e242b;
+  --c-forest: #4f46e5;
+  --c-forest-light: #6366f1;
+  --c-forest-subtle: #eef2ff;
+
+  --c-ivory: #f8f9fd;
+  --c-ivory-warm: #f1f4fa;
+  --c-ivory-card: #ffffff;
+
+  --c-orange: #7c3aed;
+  --c-orange-hover: #6d28d9;
+  --c-orange-light: #ede9fe;
+  --c-orange-glow: rgba(124, 58, 237, 0.25);
+
+  --c-sage: #818cf8;
+  --c-sage-light: #c7d2fe;
+  --c-sage-soft: #f5f3ff;
+  --c-sage-dark: #4338ca;
+
+  --c-beige: #e2e8f0;
+  --c-beige-light: #f8fafc;
+  --c-border-gold: #818cf8;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.1);
+  --shadow-floating: 0 20px 60px rgba(15, 23, 42, 0.08);
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--c-bg);
+  color: var(--c-charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Global Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--c-obsidian);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 18px rgba(30, 36, 43, 0.2);
+  transition: var(--transition);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background-color: var(--c-obsidian-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 20, 26, 0.3);
+}
+
+.btn-violet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--c-violet) 0%, var(--c-primary) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 18px var(--c-violet-glow);
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.btn-violet:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.35);
+}
+
+.btn-forest {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--c-primary);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.btn-forest:hover {
+  background-color: var(--c-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #ffffff;
+  color: var(--c-charcoal);
+  border: 1.5px solid var(--c-border);
+  font-weight: 700;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.btn-secondary:hover {
+  background-color: var(--c-violet-subtle);
+  border-color: var(--c-violet);
+  color: var(--c-violet);
+  transform: translateY(-2px);
+}
+
+/* Badges & Tags */
+.badge-editorial {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-radius: var(--radius-full);
+  background-color: var(--c-violet-light);
+  color: var(--c-violet);
+  border: 1px solid var(--c-violet-light);
+}
+
+.badge-orange {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-full);
+  background-color: var(--c-violet-light);
+  color: var(--c-violet);
+}
+
+.badge-forest {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-full);
+  background-color: var(--c-primary-light);
+  color: var(--c-primary-dark);
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--c-charcoal-muted);
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+.form-control, .form-select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--c-charcoal);
+  background-color: #ffffff;
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  outline: none;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--c-violet);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+  background-color: #ffffff;
+}
+
+.form-control.is-invalid, .form-select.is-invalid {
+  border-color: #dc3545;
+  background-color: #fff9f9;
+}
+
+.invalid-feedback {
+  color: #c92a2a;
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+/* Card Styling */
+.card-editorial {
+  background: #ffffff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.card-editorial:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--c-border-strong);
+}
+
+/* ===================================================================
+   SLIDE ANIMATIONS SYSTEM
+   =================================================================== */
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pageSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes slideFloatReverse {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes trainGlider {
+  0% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+  100% {
+    transform: translateX(-6px);
+  }
+}
+
+@keyframes slideShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.anim-slide-up {
+  animation: slideInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slide-down {
+  animation: slideInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slide-left {
+  animation: slideInLeft 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slide-right {
+  animation: slideInRight 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-stagger-1 { animation-delay: 0.08s; }
+.anim-stagger-2 { animation-delay: 0.16s; }
+.anim-stagger-3 { animation-delay: 0.24s; }
+.anim-stagger-4 { animation-delay: 0.32s; }
+
+/* Print Styles for Digital Boarding Pass */
+@media print {
+  body {
+    background-color: #ffffff !important;
+  }
+  header, footer, .no-print {
+    display: none !important;
+  }
+  .print-area {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: 1px solid #111111 !important;
+    max-width: 100% !important;
+  }
+}

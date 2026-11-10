@@ -1,0 +1,10 @@
+{
+  "buildCommand": "ng build",
+  "outputDirectory": "dist/railway-reservation/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

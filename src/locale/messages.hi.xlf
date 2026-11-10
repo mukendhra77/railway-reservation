@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" target-language="hi" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="navBrand" datatype="html">
+        <source>YĀTRĀ RAIL</source>
+        <target>यात्रा रेल</target>
+      </trans-unit>
+      <trans-unit id="navBrandSub" datatype="html">
+        <source>THE OVERLAND JOURNAL</source>
+        <target>रेलवे यात्रा जर्नल</target>
+      </trans-unit>
+      <trans-unit id="navSearch" datatype="html">
+        <source>Search Trains</source>
+        <target>ट्रेन खोजें</target>
+      </trans-unit>
+      <trans-unit id="navPnr" datatype="html">
+        <source>PNR Status</source>
+        <target>पीएनआर स्थिति</target>
+      </trans-unit>
+      <trans-unit id="navMyBookings" datatype="html">
+        <source>My Bookings</source>
+        <target>मेरी बुकिंग</target>
+      </trans-unit>
+      <trans-unit id="navSignIn" datatype="html">
+        <source>Sign In</source>
+        <target>साइन इन</target>
+      </trans-unit>
+      <trans-unit id="navRegister" datatype="html">
+        <source>Register</source>
+        <target>पंजीकरण करें</target>
+      </trans-unit>
+      <trans-unit id="heroBadge" datatype="html">
+        <source>ESTD. 1853 • INDIAN OVERLAND EXPEDITIONS</source>
+        <target>स्थापना 1853 • भारतीय रेल यात्राएं</target>
+      </trans-unit>
+      <trans-unit id="heroTitle" datatype="html">
+        <source>Slow Journeys, Timeless Tracks</source>
+        <target>शांत यात्राएं, अविस्मरणीय मार्ग</target>
+      </trans-unit>
+      <trans-unit id="heroSubtitle" datatype="html">
+        <source>Experience the soul of Indian landscapes through vintage corridors, panoramic vista-domes, and seamless digital reservations.</source>
+        <target>विस्टाडोम डिब्बों, सुरम्य दृश्यों और आसान डिजिटल टिकट आरक्षण के साथ भारतीय रेल की सुंदरता का अनुभव करें।</target>
+      </trans-unit>
+      <trans-unit id="panelTitle" datatype="html">
+        <source>Plan Your Expedition</source>
+        <target>अपनी यात्रा की योजना बनाएं</target>
+      </trans-unit>
+      <trans-unit id="panelFrom" datatype="html">
+        <source>From Station</source>
+        <target>प्रस्थान स्टेशन</target>
+      </trans-unit>
+      <trans-unit id="panelTo" datatype="html">
+        <source>To Station</source>
+        <target>गंतव्य स्टेशन</target>
+      </trans-unit>
+      <trans-unit id="panelDate" datatype="html">
+        <source>Journey Date</source>
+        <target>यात्रा की तिथि</target>
+      </trans-unit>
+      <trans-unit id="panelSearchBtn" datatype="html">
+        <source>Search Available Trains</source>
+        <target>उपलब्ध ट्रेनें खोजें</target>
+      </trans-unit>
+      <trans-unit id="bookingTitle" datatype="html">
+        <source>Passenger Reservation</source>
+        <target>यात्री टिकट आरक्षण</target>
+      </trans-unit>
+      <trans-unit id="confirmCongrats" datatype="html">
+        <source>Booking Confirmed!</source>
+        <target>आरक्षण सफल रहा!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,532 @@
+<div class="home-page-container">
+  <!-- 2. SPLIT-SCREEN HERO SECTION -->
+  <section class="hero-split-section">
+    <div class="container hero-grid">
+      <!-- Left Hero Column -->
+      <div class="hero-text-col">
+        <div class="hero-tag-badge">
+          <span class="pulse-indicator"></span>
+          {{ 'hero.badge' | translate }}
+        </div>
+
+        <h1 class="hero-heading font-serif">
+          {{ 'hero.title' | translate }}
+        </h1>
+
+        <p class="hero-intro">
+          {{ 'hero.subtitle' | translate }}
+        </p>
+
+        <div class="hero-actions">
+          <a routerLink="/search" class="btn-primary btn-hero">
+            <span>{{ 'hero.exploreBtn' | translate }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <a routerLink="/pnr-status" class="btn-secondary btn-hero-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>{{ 'hero.trackPnrBtn' | translate }}</span>
+          </a>
+        </div>
+
+        <div class="hero-trust-strip">
+          <div class="trust-stat-item">
+            <span class="stat-number">160 km/h</span>
+            <span class="stat-desc">Vande Bharat Semi-High Speed Corridors</span>
+          </div>
+          <div class="trust-stat-divider"></div>
+          <div class="trust-stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-desc">{{ 'hero.statReliability' | translate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Hero Column: Landscape Photo with Overlapping Destination Cards -->
+      <div class="hero-visual-col">
+        <div class="visual-frame">
+          <img
+            src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80"
+            alt="Scenic Nilgiri Mountain Railway Viaduct"
+            class="hero-main-photo"
+          />
+          <div class="visual-overlay-gradient"></div>
+
+          <!-- Overlapping Card 1: Top Floating Route -->
+          <div class="floating-card floating-card-top">
+            <div class="floating-card-pill">
+              <span class="pill-dot"></span> VANDE BHARAT EXPRESS
+            </div>
+            <h4 class="floating-card-title">Delhi ⟷ Varanasi Bullet Corridor</h4>
+            <div class="floating-card-meta">
+              <span>8h 00m</span>
+              <span>•</span>
+              <span>160 km/h</span>
+              <span>•</span>
+              <span class="fare-tag">₹1,750</span>
+            </div>
+          </div>
+
+          <!-- Overlapping Card 2: Bottom Floating Route -->
+          <div class="floating-card floating-card-bottom">
+            <div class="floating-card-pill sage-pill">
+              <span class="pill-dot green"></span> COASTAL VISTADOME
+            </div>
+            <h4 class="floating-card-title">Konkan Sea Breeze Express</h4>
+            <div class="floating-card-meta">
+              <span>Mumbai → Madgaon Goa</span>
+              <span>•</span>
+              <span>Vista Lounge</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BOOKING SECTION - EXACTLY MATCHING USER'S PHOTO -->
+  <section class="floating-booking-section">
+    <div class="container booking-container-narrow">
+      <div class="luma-booking-card">
+        <!-- Card Header Matching Photo -->
+        <div class="luma-card-header">
+          <div class="luma-header-left">
+            <div class="luma-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="3" width="16" height="16" rx="3" />
+                <path d="M4 11h16" />
+                <path d="M9 15h6" />
+                <circle cx="8" cy="18" r="1" />
+                <circle cx="16" cy="18" r="1" />
+              </svg>
+            </div>
+            <div class="luma-title-group">
+              <h3 class="luma-title">Find Your Train Journey</h3>
+              <span class="luma-sub">Yātrā Rail Smart Dispatch</span>
+            </div>
+          </div>
+          <span class="luma-live-badge">LIVE</span>
+        </div>
+
+        <div class="luma-divider"></div>
+
+        <!-- Booking Form 2x2 Grid with Centered Swap Button -->
+        <form [formGroup]="bookingForm" (ngSubmit)="onSearch()" class="luma-form">
+          <!-- Row 1: Origin & Destination with Swap in Between -->
+          <div class="luma-route-row">
+            <!-- Origin Station -->
+            <div class="luma-field">
+              <label class="luma-label">ORIGIN STATION</label>
+              <div class="luma-input-wrapper">
+                <span class="luma-input-icon">📍</span>
+                <select
+                  formControlName="fromStation"
+                  (change)="checkSameStation()"
+                  class="luma-select"
+                  [class.is-invalid]="sameStationError"
+                >
+                  @for (stn of stations; track stn.code) {
+                    <option [value]="stn.code">
+                      {{ stn.name }} ({{ stn.code }}) - {{ stn.city }}
+                    </option>
+                  }
+                </select>
+                <span class="luma-chevron">⌄</span>
+              </div>
+            </div>
+
+            <!-- Swap Circular Button in Center -->
+            <div class="luma-swap-center">
+              <button
+                type="button"
+                class="luma-btn-swap"
+                (click)="swapStations()"
+                title="Swap Origin and Destination"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M7 3v14M7 3l-4 4M7 3l4 4"></path>
+                  <path d="M17 21V7M17 21l-4-4M17 21l4-4"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Destination Station -->
+            <div class="luma-field">
+              <label class="luma-label">DESTINATION STATION</label>
+              <div class="luma-input-wrapper">
+                <span class="luma-input-icon">🏁</span>
+                <select
+                  formControlName="toStation"
+                  (change)="checkSameStation()"
+                  class="luma-select"
+                  [class.is-invalid]="sameStationError"
+                >
+                  @for (stn of stations; track stn.code) {
+                    <option [value]="stn.code">
+                      {{ stn.name }} ({{ stn.code }}) - {{ stn.city }}
+                    </option>
+                  }
+                </select>
+                <span class="luma-chevron">⌄</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Travel Date & Travel Class -->
+          <div class="luma-options-row">
+            <!-- Travel Date -->
+            <div class="luma-field">
+              <label class="luma-label">TRAVEL DATE</label>
+              <div class="luma-input-wrapper">
+                <input
+                  type="date"
+                  [min]="minDate"
+                  formControlName="journeyDate"
+                  class="luma-date-input"
+                />
+              </div>
+            </div>
+
+            <!-- Travel Class -->
+            <div class="luma-field">
+              <label class="luma-label">TRAVEL CLASS</label>
+              <div class="luma-input-wrapper">
+                <select formControlName="travelClass" class="luma-select">
+                  <option value="ALL">All Travel Classes</option>
+                  <option value="CC">AC Chair Car (CC)</option>
+                  <option value="2A">Executive / AC 2 Tier (2A)</option>
+                  <option value="3A">AC 3 Tier (3A)</option>
+                  <option value="1A">AC First Class (1A)</option>
+                  <option value="SL">Sleeper Class (SL)</option>
+                </select>
+                <span class="luma-chevron">⌄</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fast Trains / Vande Bharat Filter Toggle -->
+          <div class="luma-fast-toggle-row">
+            <label class="fast-toggle-label">
+              <input type="checkbox" formControlName="onlyHighSpeed" />
+              <span class="fast-toggle-custom"></span>
+              <span class="fast-toggle-text">
+                ⚡ <strong>High-Speed Express Priority:</strong> Show fast trains such as Vande Bharat & Rajdhani
+              </span>
+            </label>
+          </div>
+
+          <!-- Same Station Alert -->
+          @if (sameStationError) {
+            <div class="luma-same-station-alert">
+              <span>⚠️ {{ 'panel.sameStationErr' | translate }}</span>
+            </div>
+          }
+
+          <!-- Row 3: Dark Search Button Matching Photo -->
+          <div class="luma-submit-row">
+            <button
+              type="submit"
+              class="luma-btn-search"
+              [disabled]="sameStationError"
+            >
+              <span>Search Available Trains</span>
+              <span class="btn-arrow">→</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. POPULAR YĀTRĀ CORRIDORS & FASTER TRAINS (MATCHING USER'S PHOTO 2) -->
+  <section class="section-fast-corridors">
+    <div class="container">
+      <div class="section-header-editorial-flex">
+        <div>
+          <h2 class="corridor-heading">Popular Yātrā Corridors</h2>
+          <p class="corridor-sub">
+            Handcrafted routes offering quiet comfort, scenic vistas, and chef-curated dining.
+          </p>
+        </div>
+        <div class="slider-controls">
+          <button
+            type="button"
+            class="btn-slide-nav"
+            (click)="scrollContainer('corridorsTrack', 'left')"
+            aria-label="Slide Left"
+            title="Slide Left"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            class="btn-slide-nav"
+            (click)="scrollContainer('corridorsTrack', 'right')"
+            aria-label="Slide Right"
+            title="Slide Right"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+
+      <!-- Real-Life Vande Bharat & Superfast Cards Grid with Horizontal Slide Track -->
+      <div class="fast-corridors-grid slide-track" id="corridorsTrack">
+        @for (item of fastCorridors; track item.id) {
+          <div class="fast-corridor-card" [class.highlight-bullet]="item.isHighSpeed">
+            <!-- Top Strip: Badge & Train Number -->
+            <div class="card-badge-row">
+              <span
+                class="corridor-badge-pill"
+                [class.vande-bharat-badge]="item.badge === 'VANDE BHARAT'"
+                [class.superfast-badge]="item.badge === 'SUPERFAST EXPRESS'"
+              >
+                {{ item.badge }}
+              </span>
+              <span class="corridor-train-num font-mono">{{ item.trainNumber }}</span>
+            </div>
+
+            <!-- Train Title -->
+            <h3 class="corridor-train-title">{{ item.trainName }}</h3>
+
+            <!-- Route Box with Duration Track (from photo) -->
+            <div class="corridor-route-box">
+              <div class="box-station from">
+                <span class="city-name">{{ item.fromCity }}</span>
+                <span class="station-code">{{ item.fromCode }}</span>
+              </div>
+
+              <div class="box-duration-track">
+                <span class="duration-time font-mono">{{ item.duration }}</span>
+                <div class="track-underline"></div>
+              </div>
+
+              <div class="box-station to">
+                <span class="city-name">{{ item.toCity }}</span>
+                <span class="station-code">{{ item.toCode }}</span>
+              </div>
+            </div>
+
+            <!-- Star Feature Bullet from photo -->
+            <div class="corridor-feature-line">
+              <span class="star-icon">☆</span>
+              <span class="feature-text">{{ item.feature }}</span>
+            </div>
+
+            <!-- Bottom Row: Price and View Route button -->
+            <div class="corridor-card-footer">
+              <div class="corridor-fare-box">
+                <span class="from-sub">FROM</span>
+                <span class="fare-val font-serif">₹{{ item.startingFare | number }}</span>
+              </div>
+
+              <button
+                type="button"
+                class="btn-view-route"
+                (click)="viewFastRoute(item)"
+              >
+                <span>View Route</span>
+                <span class="chevron-right">›</span>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. POPULAR DESTINATIONS SECTION -->
+  <section class="section-destinations">
+    <div class="container">
+      <div class="section-header-editorial-flex">
+        <div>
+          <div class="header-tag-pill">{{ 'dest.title' | translate }}</div>
+          <h2 class="section-title font-serif">Curated Overland Expeditions</h2>
+          <p class="section-desc">{{ 'dest.subtitle' | translate }}</p>
+        </div>
+        <div class="slider-controls">
+          <button
+            type="button"
+            class="btn-slide-nav"
+            (click)="scrollContainer('destinationsTrack', 'left')"
+            aria-label="Slide Left"
+            title="Slide Left"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            class="btn-slide-nav"
+            (click)="scrollContainer('destinationsTrack', 'right')"
+            aria-label="Slide Right"
+            title="Slide Right"
+          >
+            ›
+          </button>
+        </div>
+      </div>
+
+      <div class="destinations-grid slide-track" id="destinationsTrack">
+        @for (dest of destinations; track dest.id) {
+          <div class="destination-card card-editorial">
+            <div class="dest-image-wrapper">
+              <img [src]="dest.image" [alt]="dest.title" class="dest-img" loading="lazy" />
+              <div class="dest-tag-badge">{{ dest.tag }}</div>
+              <div class="dest-fare-badge">
+                <span class="from-text">From</span>
+                <span class="fare-num">{{ translationService.formatCurrency(dest.startingFare) }}</span>
+              </div>
+            </div>
+
+            <div class="dest-content">
+              <div class="dest-route-code">
+                <span class="route-icon">⟷</span> {{ dest.route }}
+                <span class="dest-duration">({{ dest.duration }})</span>
+              </div>
+              <h3 class="dest-title font-serif">{{ dest.title }}</h3>
+              <p class="dest-subtitle">{{ dest.subtitle }}</p>
+              <p class="dest-description">{{ dest.description }}</p>
+
+              <div class="dest-card-footer">
+                <button (click)="bookRoute(dest)" class="btn-primary btn-reserve-route">
+                  <span>{{ 'dest.bookRoute' | translate }}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TRAVEL INFORMATION / EDITORIAL PHILOSOPHY -->
+  <section class="section-travel-info">
+    <div class="container">
+      <div class="section-header-editorial text-center">
+        <div class="header-tag-pill">{{ 'info.title' | translate }}</div>
+        <h2 class="section-title font-serif">Designed for Mindful Discovery</h2>
+        <p class="section-desc">{{ 'info.subtitle' | translate }}</p>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-feature-card">
+          <div class="info-icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <span class="info-card-num font-mono">01</span>
+          <h4 class="info-card-title font-serif">{{ 'info.card1Title' | translate }}</h4>
+          <p class="info-card-desc">{{ 'info.card1Desc' | translate }}</p>
+        </div>
+
+        <div class="info-feature-card">
+          <div class="info-icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <span class="info-card-num font-mono">02</span>
+          <h4 class="info-card-title font-serif">{{ 'info.card2Title' | translate }}</h4>
+          <p class="info-card-desc">{{ 'info.card2Desc' | translate }}</p>
+        </div>
+
+        <div class="info-feature-card">
+          <div class="info-icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+          </div>
+          <span class="info-card-num font-mono">03</span>
+          <h4 class="info-card-title font-serif">{{ 'info.card3Title' | translate }}</h4>
+          <p class="info-card-desc">{{ 'info.card3Desc' | translate }}</p>
+        </div>
+
+        <div class="info-feature-card">
+          <div class="info-icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <span class="info-card-num font-mono">04</span>
+          <h4 class="info-card-title font-serif">{{ 'info.card4Title' | translate }}</h4>
+          <p class="info-card-desc">{{ 'info.card4Desc' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CLEAN EDITORIAL FOOTER -->
+  <footer class="app-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <span class="brand-title">{{ 'nav.brand' | translate }}</span>
+          <span class="brand-sub">{{ 'nav.brandSub' | translate }}</span>
+        </div>
+        <p class="footer-about">
+          {{ 'footer.about' | translate }}
+        </p>
+        <div class="footer-academic-badge">
+          🎓 Academic Assignment Evaluation Edition
+        </div>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 class="footer-heading">{{ 'footer.links' | translate }}</h4>
+        <ul class="footer-nav-list">
+          <li><a routerLink="/">Home / హోమ్ / होम</a></li>
+          <li><a routerLink="/search">{{ 'nav.search' | translate }}</a></li>
+          <li><a routerLink="/pnr-status">{{ 'nav.pnr' | translate }}</a></li>
+          <li><a routerLink="/my-bookings">{{ 'nav.myBookings' | translate }}</a></li>
+          <li><a routerLink="/login">{{ 'nav.signIn' | translate }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-routes-col">
+        <h4 class="footer-heading">Fast Corridors</h4>
+        <ul class="footer-nav-list">
+          <li><a routerLink="/trains" [queryParams]="{from: 'NDLS', to: 'BSB'}">Delhi ⟷ Varanasi Vande Bharat (8h)</a></li>
+          <li><a routerLink="/trains" [queryParams]="{from: 'SBC', to: 'MAS'}">Bengaluru ⟷ Chennai Vande Bharat (4h 25m)</a></li>
+          <li><a routerLink="/trains" [queryParams]="{from: 'HYB', to: 'VSKP'}">Hyderabad ⟷ Vizag Vande Bharat (8h 30m)</a></li>
+          <li><a routerLink="/trains" [queryParams]="{from: 'CSMT', to: 'ADI'}">Mumbai ⟷ Ahmedabad Bullet (5h 25m)</a></li>
+          <li><a routerLink="/trains" [queryParams]="{from: 'CSMT', to: 'MAO'}">Mumbai ⟷ Goa Vande Bharat (7h 45m)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact-col">
+        <h4 class="footer-heading">Architecture & Tech</h4>
+        <p class="footer-tech-info">
+          Engineered with Angular 22 Standalone Components, Reactive Forms, LocalStorage, i18n and high-speed dispatch algorithms.
+        </p>
+        <div class="footer-status-pill">
+          <span class="status-live-dot"></span> LocalStorage Engine Ready
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div class="container bottom-bar-inner">
+        <span>© 2026 Yātrā Rail Project • Student Designed Railway Reservation Portal</span>
+        <span class="assignment-notice">{{ 'footer.disclaimer' | translate }}</span>
+      </div>
+    </div>
+  </footer>
+</div>

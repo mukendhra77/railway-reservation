@@ -1,0 +1,232 @@
+<div class="confirmation-page-wrapper">
+  <div class="container confirmation-layout">
+    <!-- Top Congrats Banner (No-print) -->
+    <div class="congrats-header-card text-center no-print">
+      <div class="success-check-circle">✓</div>
+      <h1 class="congrats-title font-serif">{{ 'confirm.congrats' | translate }}</h1>
+      <p class="congrats-desc">{{ 'confirm.subtitle' | translate }}</p>
+
+      <div class="confirmation-actions-row">
+        <button (click)="printTicket()" class="btn-primary btn-print">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>{{ 'confirm.printBtn' | translate }}</span>
+        </button>
+
+        <a routerLink="/my-bookings" class="btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>{{ 'confirm.viewMyBookings' | translate }}</span>
+        </a>
+
+        <a routerLink="/search" class="btn-secondary">
+          <span>{{ 'confirm.bookAnother' | translate }}</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ATTRACTIVE DIGITAL TICKET INTERFACE (Printable) -->
+    @if (booking) {
+      <div class="digital-ticket-wrapper print-area">
+        <div class="ticket-container">
+          <!-- Ticket Top Gold/Forest Header -->
+          <div class="ticket-header-strip">
+            <div class="ticket-seal-brand">
+              <span class="seal-icon">🚆</span>
+              <div>
+                <span class="ticket-org-name font-cinzel">{{ 'nav.brand' | translate }}</span>
+                <span class="ticket-type-tag">{{ 'confirm.ticketType' | translate }}</span>
+              </div>
+            </div>
+
+            <!-- Authentic Watermark Stamp -->
+            <div class="ticket-stamp-box">
+              <span class="stamp-confirmed">CONFIRMED</span>
+              <span class="stamp-sub">SEAT ALLOCATED</span>
+            </div>
+          </div>
+
+          <!-- PNR and Primary Identifiers Banner -->
+          <div class="ticket-pnr-banner">
+            <div class="pnr-item-box">
+              <span class="pnr-label-text">{{ 'confirm.pnrLabel' | translate }}</span>
+              <span class="pnr-code-value font-mono">{{ booking.pnr }}</span>
+            </div>
+
+            <div class="pnr-meta-box">
+              <span class="pnr-meta-label">TRANSACTION ID</span>
+              <span class="pnr-meta-val font-mono">{{ booking.id }}</span>
+            </div>
+
+            <div class="pnr-meta-box">
+              <span class="pnr-meta-label">BOOKED ON</span>
+              <span class="pnr-meta-val">{{ translationService.formatDate(booking.bookingDate) }}</span>
+            </div>
+
+            <div class="pnr-meta-box status-pill-wrap">
+              <span class="badge-status-confirmed">
+                {{ booking.bookingStatus }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Train & Route Details -->
+          <div class="ticket-journey-body">
+            <div class="ticket-train-info-row">
+              <div class="train-badge-group">
+                <span class="ticket-train-num font-mono">#{{ booking.trainNumber }}</span>
+                <h2 class="ticket-train-name font-serif">{{ booking.trainName }}</h2>
+                <span class="ticket-class-pill">{{ booking.className }} ({{ booking.travelClass }})</span>
+              </div>
+              <div class="platform-info font-mono">
+                {{ booking.platform || 'Platform 2' }}
+              </div>
+            </div>
+
+            <!-- Route Stations & Times -->
+            <div class="ticket-timing-grid">
+              <div class="timing-col from-col">
+                <span class="col-indicator">BOARDING</span>
+                <span class="col-time font-mono">{{ booking.departureTime }}</span>
+                <span class="col-station-code font-cinzel">{{ booking.fromStationCode }}</span>
+                <span class="col-station-name">{{ booking.fromStationName }}</span>
+                <span class="col-date font-mono">{{ translationService.formatDate(booking.journeyDate) }}</span>
+              </div>
+
+              <div class="timing-track-col">
+                <div class="ticket-route-line">
+                  <span class="route-point"></span>
+                  <span class="route-connector"></span>
+                  <span class="route-train-emoji">🚂</span>
+                  <span class="route-connector"></span>
+                  <span class="route-point"></span>
+                </div>
+                <span class="overland-label font-mono">CONFIRMED PASSAGE</span>
+              </div>
+
+              <div class="timing-col to-col">
+                <span class="col-indicator">DESTINATION</span>
+                <span class="col-time font-mono">{{ booking.arrivalTime }}</span>
+                <span class="col-station-code font-cinzel">{{ booking.toStationCode }}</span>
+                <span class="col-station-name">{{ booking.toStationName }}</span>
+                <span class="col-date font-mono">{{ translationService.formatDate(booking.journeyDate) }}</span>
+              </div>
+            </div>
+
+            <!-- Perforated Divider Line with Cutouts -->
+            <div class="ticket-perforated-divider">
+              <div class="notch notch-left"></div>
+              <div class="perforation-dashes"></div>
+              <div class="notch notch-right"></div>
+            </div>
+
+            <!-- Passenger Manifest Table -->
+            <div class="ticket-passengers-section">
+              <h3 class="manifest-title font-serif">Passenger Travel Manifest</h3>
+              <div class="manifest-table-wrapper">
+                <table class="manifest-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>PASSENGER NAME</th>
+                      <th>AGE / GENDER</th>
+                      <th>COACH</th>
+                      <th>BERTH / SEAT ALLOCATION</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (p of booking.passengers; track $index) {
+                      <tr>
+                        <td class="font-mono">{{ $index + 1 }}</td>
+                        <td class="passenger-name-cell font-semibold">{{ p.name }}</td>
+                        <td>{{ p.age }} Yrs / {{ p.gender }}</td>
+                        <td>
+                          <span class="coach-badge font-mono">{{ p.allocatedCoach }}</span>
+                        </td>
+                        <td class="seat-cell font-mono">{{ p.allocatedSeat }}</td>
+                        <td>
+                          <span class="status-cell-tag">CNF (Confirmed)</span>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Perforated Divider Line with Cutouts -->
+            <div class="ticket-perforated-divider">
+              <div class="notch notch-left"></div>
+              <div class="perforation-dashes"></div>
+              <div class="notch notch-right"></div>
+            </div>
+
+            <!-- Fare & Barcode Bottom Section -->
+            <div class="ticket-footer-strip">
+              <!-- Fare Breakdown -->
+              <div class="ticket-fare-summary">
+                <div class="fare-item">
+                  <span class="fare-label">Base Ticket Fare:</span>
+                  <span class="fare-amt font-mono">{{ translationService.formatCurrency(booking.baseFare) }}</span>
+                </div>
+                @if (booking.cateringFee > 0) {
+                  <div class="fare-item">
+                    <span class="fare-label">Catering Charges:</span>
+                    <span class="fare-amt font-mono">{{ translationService.formatCurrency(booking.cateringFee) }}</span>
+                  </div>
+                }
+                <div class="fare-item">
+                  <span class="fare-label">Reservation & Taxes:</span>
+                  <span class="fare-amt font-mono">{{ translationService.formatCurrency(booking.convenienceFee) }}</span>
+                </div>
+                <div class="fare-item total-fare-row">
+                  <span class="fare-label-total">Total Fare Paid:</span>
+                  <span class="fare-amt-total font-serif">
+                    {{ translationService.formatCurrency(booking.totalFare) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Barcode & QR Simulation -->
+              <div class="ticket-barcode-box">
+                <div class="simulated-qr">
+                  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                    <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                    <line x1="17" y1="7" x2="17.01" y2="7"></line>
+                    <line x1="7" y1="17" x2="7.01" y2="17"></line>
+                    <line x1="17" y1="17" x2="17.01" y2="17"></line>
+                  </svg>
+                </div>
+                <div class="simulated-barcode">
+                  <div class="barcode-bars">
+                    <span class="b-thin"></span><span class="b-thick"></span><span class="b-med"></span>
+                    <span class="b-thin"></span><span class="b-thick"></span><span class="b-thin"></span>
+                    <span class="b-med"></span><span class="b-thick"></span><span class="b-thin"></span>
+                    <span class="b-thick"></span><span class="b-thin"></span><span class="b-med"></span>
+                    <span class="b-thin"></span><span class="b-thick"></span><span class="b-thin"></span>
+                  </div>
+                  <span class="barcode-number font-mono">{{ booking.pnr }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Compliance Notice -->
+            <div class="ticket-legal-notice">
+              <span>Valid for travel only with government-issued photo identity proof. Academic Clone Assignment.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,174 @@
+<div class="search-page-wrapper">
+  <div class="container search-layout">
+    <div class="search-hero-box text-center">
+      <span class="editorial-chip">{{ 'hero.badge' | translate }}</span>
+      <h1 class="search-page-title font-serif">{{ 'search.pageTitle' | translate }}</h1>
+      <p class="search-page-sub">{{ 'search.pageSubtitle' | translate }}</p>
+    </div>
+
+    <!-- Booking Card Exactly Matching User's Photo 1 -->
+    <div class="luma-booking-card">
+      <!-- Header -->
+      <div class="luma-card-header">
+        <div class="luma-header-left">
+          <div class="luma-icon-box">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="3" width="16" height="16" rx="3" />
+              <path d="M4 11h16" />
+              <path d="M9 15h6" />
+              <circle cx="8" cy="18" r="1" />
+              <circle cx="16" cy="18" r="1" />
+            </svg>
+          </div>
+          <div class="luma-title-group">
+            <h3 class="luma-title">Find Your Train Journey</h3>
+            <span class="luma-sub">Yātrā Rail Smart Dispatch</span>
+          </div>
+        </div>
+        <span class="luma-live-badge">LIVE</span>
+      </div>
+
+      <div class="luma-divider"></div>
+
+      <!-- Form Grid -->
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="luma-form">
+        <!-- Row 1: Origin & Destination with Centered Swap -->
+        <div class="luma-route-row">
+          <!-- Origin -->
+          <div class="luma-field">
+            <label class="luma-label">ORIGIN STATION</label>
+            <div class="luma-input-wrapper">
+              <span class="luma-input-icon">📍</span>
+              <select
+                formControlName="fromStation"
+                (change)="checkSameStation()"
+                class="luma-select"
+                [class.is-invalid]="sameStationError"
+              >
+                @for (stn of stations; track stn.code) {
+                  <option [value]="stn.code">
+                    {{ stn.name }} ({{ stn.code }}) - {{ stn.city }}
+                  </option>
+                }
+              </select>
+              <span class="luma-chevron">⌄</span>
+            </div>
+          </div>
+
+          <!-- Centered Swap -->
+          <div class="luma-swap-center">
+            <button
+              type="button"
+              class="luma-btn-swap"
+              (click)="swapStations()"
+              title="Swap Origin and Destination"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 3v14M7 3l-4 4M7 3l4 4"></path>
+                <path d="M17 21V7M17 21l-4-4M17 21l4-4"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Destination -->
+          <div class="luma-field">
+            <label class="luma-label">DESTINATION STATION</label>
+            <div class="luma-input-wrapper">
+              <span class="luma-input-icon">🏁</span>
+              <select
+                formControlName="toStation"
+                (change)="checkSameStation()"
+                class="luma-select"
+                [class.is-invalid]="sameStationError"
+              >
+                @for (stn of stations; track stn.code) {
+                  <option [value]="stn.code">
+                    {{ stn.name }} ({{ stn.code }}) - {{ stn.city }}
+                  </option>
+                }
+              </select>
+              <span class="luma-chevron">⌄</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Date & Class -->
+        <div class="luma-options-row">
+          <!-- Travel Date -->
+          <div class="luma-field">
+            <label class="luma-label">TRAVEL DATE</label>
+            <div class="luma-input-wrapper">
+              <input
+                type="date"
+                [min]="minDate"
+                formControlName="journeyDate"
+                class="luma-date-input"
+              />
+            </div>
+          </div>
+
+          <!-- Travel Class -->
+          <div class="luma-field">
+            <label class="luma-label">TRAVEL CLASS</label>
+            <div class="luma-input-wrapper">
+              <select formControlName="travelClass" class="luma-select">
+                <option value="ALL">All Travel Classes</option>
+                <option value="CC">AC Chair Car (CC)</option>
+                <option value="2A">Executive / AC 2 Tier (2A)</option>
+                <option value="3A">AC 3 Tier (3A)</option>
+                <option value="1A">AC First Class (1A)</option>
+                <option value="SL">Sleeper Class (SL)</option>
+              </select>
+              <span class="luma-chevron">⌄</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Speed Option -->
+        <div class="luma-fast-toggle-row">
+          <label class="fast-toggle-label">
+            <input type="checkbox" formControlName="onlyHighSpeed" />
+            <span class="fast-toggle-custom"></span>
+            <span class="fast-toggle-text">
+              ⚡ <strong>High-Speed Express Priority:</strong> Show fast trains such as Vande Bharat & Bullet Corridors
+            </span>
+          </label>
+        </div>
+
+        @if (sameStationError) {
+          <div class="luma-same-station-alert">
+            <span>⚠️ {{ 'panel.sameStationErr' | translate }}</span>
+          </div>
+        }
+
+        <!-- Dark Search Button -->
+        <div class="luma-submit-row">
+          <button
+            type="submit"
+            class="luma-btn-search"
+            [disabled]="sameStationError"
+          >
+            <span>Search Available Trains</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Popular Rail Corridors -->
+      <div class="quick-routes-section">
+        <span class="quick-routes-title">Popular Fast Corridors:</span>
+        <div class="quick-routes-list">
+          @for (route of popularRoutes; track route.label) {
+            <button
+              type="button"
+              class="quick-route-chip"
+              (click)="selectQuickRoute(route)"
+            >
+              <span>{{ route.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

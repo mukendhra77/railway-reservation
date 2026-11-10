@@ -1,0 +1,239 @@
+<div class="train-list-page-wrapper">
+  <!-- Top Journey Summary Header Bar -->
+  <div class="journey-summary-bar">
+    <div class="container summary-inner">
+      <div class="summary-route">
+        <span class="route-station">{{ fromCode }}</span>
+        <span class="route-arrow">⟶</span>
+        <span class="route-station">{{ toCode }}</span>
+        <span class="summary-date font-mono">
+          • {{ translationService.formatDate(journeyDate) }}
+        </span>
+      </div>
+
+      <div class="summary-actions">
+        <a routerLink="/search" class="btn-modify-journey">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>{{ 'search.modify' | translate }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container main-list-container">
+    <!-- Filter and Result Count Bar with High-Speed Toggle -->
+    <div class="results-filter-bar">
+      <div class="results-count">
+        <span class="count-num">{{ filteredTrains.length }}</span>
+        <span class="count-label">{{ 'search.resultsCount' | translate }}</span>
+      </div>
+
+      <div class="filters-group-right">
+        <!-- Vande Bharat / High-Speed Quick Filter Toggle -->
+        <button
+          type="button"
+          class="vande-bharat-filter-btn"
+          [class.active]="onlyHighSpeedFilter"
+          (click)="toggleHighSpeedFilter()"
+        >
+          <span class="bolt-icon">⚡</span>
+          <span>High-Speed / Vande Bharat Trains</span>
+          @if (onlyHighSpeedFilter) {
+            <span class="filter-check">✓ Active</span>
+          }
+        </button>
+
+        <!-- Departure Time Filters -->
+        <div class="departure-filters">
+          <button
+            type="button"
+            class="time-chip"
+            [class.active]="selectedTimeFilter === 'ALL'"
+            (click)="setTimeFilter('ALL')"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            class="time-chip"
+            [class.active]="selectedTimeFilter === 'MORNING'"
+            (click)="setTimeFilter('MORNING')"
+          >
+            🌅 {{ 'search.filterMorning' | translate }}
+          </button>
+          <button
+            type="button"
+            class="time-chip"
+            [class.active]="selectedTimeFilter === 'AFTERNOON'"
+            (click)="setTimeFilter('AFTERNOON')"
+          >
+            ☀️ {{ 'search.filterAfternoon' | translate }}
+          </button>
+          <button
+            type="button"
+            class="time-chip"
+            [class.active]="selectedTimeFilter === 'EVENING'"
+            (click)="setTimeFilter('EVENING')"
+          >
+            🌙 {{ 'search.filterEvening' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State if no train matches -->
+    @if (filteredTrains.length === 0) {
+      <div class="no-trains-card card-editorial text-center">
+        <div class="empty-icon-box">🚂</div>
+        <h3 class="empty-title font-serif">{{ 'search.noTrainsFound' | translate }}</h3>
+        <p class="empty-desc">No trains match your current filter criteria. Try viewing all trains.</p>
+        <button (click)="onlyHighSpeedFilter = false; setTimeFilter('ALL')" class="btn-secondary">
+          {{ 'search.viewAll' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- Attractive Horizontal Train Information Cards -->
+    <div class="train-cards-stream">
+      @for (train of filteredTrains; track train.id) {
+        <div
+          class="train-horizontal-card card-editorial"
+          [class.is-high-speed-card]="train.isHighSpeed"
+        >
+          <!-- Card Header / Title Row -->
+          <div class="train-card-top-strip">
+            <div class="train-identity">
+              <!-- High-Speed Badge if applicable -->
+              @if (train.speedBadge === 'VANDE BHARAT') {
+                <span class="badge-vande-bharat">
+                  ⚡ VANDE BHARAT
+                </span>
+              } @else if (train.speedBadge === 'SUPERFAST EXPRESS') {
+                <span class="badge-superfast-pill">
+                  SUPERFAST EXPRESS
+                </span>
+              }
+
+              <span class="train-number font-mono">#{{ train.trainNumber }}</span>
+              <h3 class="train-name font-serif">{{ train.trainName }}</h3>
+              <span class="train-type-pill">{{ train.trainType }}</span>
+            </div>
+
+            <div class="train-runs-on">
+              <span class="runs-label">{{ 'search.runsOn' | translate }}:</span>
+              <div class="days-badges">
+                @for (day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; track day) {
+                  <span
+                    class="day-dot"
+                    [class.active]="train.runsOnDays.includes(day)"
+                    [title]="day"
+                  >
+                    {{ day.charAt(0) }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Train Journey Details (Departure, Duration, Arrival) -->
+          <div class="journey-timing-row">
+            <!-- Departure -->
+            <div class="time-block departure">
+              <span class="time-val font-mono">{{ train.departureTime }}</span>
+              <span class="station-code">{{ train.fromStationCode }}</span>
+              <span class="station-name">{{ train.fromStationName }}</span>
+            </div>
+
+            <!-- Route Visual Graphic with Underline -->
+            <div class="timing-visual-track">
+              <span class="duration-badge font-mono" [class.fast-duration]="train.isHighSpeed">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                {{ train.duration }}
+                @if (train.isHighSpeed) {
+                  <span class="fast-tag">• FASTEST</span>
+                }
+              </span>
+              <div class="track-line">
+                <span class="track-node start"></span>
+                <span class="track-line-body" [class.fast-body]="train.isHighSpeed"></span>
+                <span class="track-icon">{{ train.isHighSpeed ? '⚡' : '🚆' }}</span>
+                <span class="track-line-body" [class.fast-body]="train.isHighSpeed"></span>
+                <span class="track-node end"></span>
+              </div>
+              <span class="distance-text">{{ train.distanceKm }} km non-stop corridor</span>
+            </div>
+
+            <!-- Arrival -->
+            <div class="time-block arrival">
+              <span class="time-val font-mono">{{ train.arrivalTime }}</span>
+              <span class="station-code">{{ train.toStationCode }}</span>
+              <span class="station-name">{{ train.toStationName }}</span>
+            </div>
+          </div>
+
+          <!-- Feature / Highlight strip -->
+          @if (train.highlight) {
+            <div class="train-highlight-line" [class.fast-highlight]="train.isHighSpeed">
+              <span class="highlight-star">☆</span>
+              <span>{{ train.highlight }}</span>
+            </div>
+          }
+
+          <!-- Class Selection Chips Grid -->
+          <div class="class-selection-container">
+            <span class="classes-label">Available Classes & Fares:</span>
+            <div class="classes-chips-grid">
+              @for (cls of train.classes; track cls.type) {
+                <button
+                  type="button"
+                  class="class-chip-card"
+                  [class.selected]="selectedClassMap[train.id] === cls.type"
+                  (click)="selectClass(train.id, cls.type)"
+                >
+                  <div class="chip-top">
+                    <span class="chip-type font-mono">{{ cls.type }}</span>
+                    <span class="chip-status badge-status">{{ cls.status }}-{{ cls.availableSeats }}</span>
+                  </div>
+                  <div class="chip-name">{{ cls.name }}</div>
+                  <div class="chip-fare">
+                    {{ translationService.formatCurrency(cls.fare) }}
+                  </div>
+                </button>
+              }
+            </div>
+          </div>
+
+          <!-- Card Bottom Action Row -->
+          <div class="train-card-action-bar">
+            <div class="selected-fare-summary">
+              <span class="fare-note">Selected Fare ({{ getSelectedClass(train).name }}):</span>
+              <span class="total-fare-highlight font-serif">
+                {{ translationService.formatCurrency(getSelectedClass(train).fare) }}
+              </span>
+              <span class="seat-avail-tag">
+                ✓ {{ getSelectedClass(train).availableSeats }} Berths Available
+              </span>
+            </div>
+
+            <button
+              (click)="bookTrain(train)"
+              class="btn-primary btn-book-train"
+            >
+              <span>{{ 'search.selectTrain' | translate }} ({{ getSelectedClass(train).type }})</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

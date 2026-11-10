@@ -1,0 +1,211 @@
+<div class="my-bookings-page-wrapper">
+  <div class="container bookings-layout">
+    <!-- Header -->
+    <div class="bookings-page-header">
+      <div class="header-left">
+        <span class="editorial-chip">{{ 'hero.badge' | translate }}</span>
+        <h1 class="page-title font-serif">{{ 'myBookings.title' | translate }}</h1>
+        <p class="page-subtitle">{{ 'myBookings.subtitle' | translate }}</p>
+      </div>
+
+      <a routerLink="/search" class="btn-primary btn-plan-new">
+        <span>+ Plan New Expedition</span>
+      </a>
+    </div>
+
+    <!-- Empty State -->
+    @if (bookings.length === 0) {
+      <div class="empty-bookings-card card-editorial text-center">
+        <div class="empty-train-icon">🎫</div>
+        <h3 class="empty-title font-serif">{{ 'myBookings.empty' | translate }}</h3>
+        <p class="empty-desc">Your overland journey journal is currently empty. Explore our scenic routes to book your first trip.</p>
+        <a routerLink="/search" class="btn-primary">
+          {{ 'myBookings.emptyCta' | translate }}
+        </a>
+      </div>
+    }
+
+    <!-- Stream of Ticket-Style Cards -->
+    <div class="bookings-stream">
+      @for (bk of bookings; track bk.pnr) {
+        <div class="ticket-style-card card-editorial" [class.is-cancelled]="bk.bookingStatus === 'CANCELLED'">
+          <!-- Top Row: PNR & Status -->
+          <div class="card-pnr-strip">
+            <div class="pnr-left">
+              <span class="pnr-title-label">{{ 'confirm.pnrLabel' | translate }}:</span>
+              <span class="pnr-code-badge font-mono">{{ bk.pnr }}</span>
+              <span class="ticket-date-tag">
+                • Booked: {{ translationService.formatDate(bk.bookingDate) }}
+              </span>
+            </div>
+
+            <div class="status-right">
+              @if (bk.bookingStatus === 'CONFIRMED') {
+                <span class="status-confirmed-pill">
+                  ● CONFIRMED
+                </span>
+              } @else {
+                <span class="status-cancelled-pill">
+                  ✕ CANCELLED
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Middle Row: Train, Route, Timings -->
+          <div class="card-journey-grid">
+            <div class="journey-train-col">
+              <span class="card-train-num font-mono">#{{ bk.trainNumber }}</span>
+              <h3 class="card-train-name font-serif">{{ bk.trainName }}</h3>
+              <span class="card-class-badge">{{ bk.className }} ({{ bk.travelClass }})</span>
+            </div>
+
+            <div class="journey-route-col">
+              <div class="station-side origin">
+                <span class="station-side-code">{{ bk.fromStationCode }}</span>
+                <span class="station-side-time font-mono">{{ bk.departureTime }}</span>
+                <span class="station-side-name">{{ bk.fromStationName }}</span>
+              </div>
+
+              <div class="route-center-graphic">
+                <span class="travel-date-badge font-mono">{{ translationService.formatDate(bk.journeyDate) }}</span>
+                <div class="arrow-line">
+                  <span class="a-line"></span>
+                  <span class="a-train">🚆</span>
+                  <span class="a-line"></span>
+                </div>
+                <span class="platform-tag">{{ bk.platform || 'Platform 1' }}</span>
+              </div>
+
+              <div class="station-side dest">
+                <span class="station-side-code">{{ bk.toStationCode }}</span>
+                <span class="station-side-time font-mono">{{ bk.arrivalTime }}</span>
+                <span class="station-side-name">{{ bk.toStationName }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Passenger Roster Strip -->
+          <div class="card-passengers-strip">
+            <span class="passengers-strip-label">Passengers ({{ bk.passengers.length }}):</span>
+            <div class="passengers-roster-list">
+              @for (p of bk.passengers; track p.name) {
+                <span class="passenger-tag">
+                  👤 {{ p.name }} ({{ p.allocatedCoach }} • {{ p.allocatedSeat }})
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Bottom Action Strip -->
+          <div class="card-bottom-bar">
+            <div class="fare-display">
+              <span class="fare-paid-label">Total Fare Paid:</span>
+              <span class="fare-paid-value font-serif">
+                {{ translationService.formatCurrency(bk.totalFare) }}
+              </span>
+              @if (bk.bookingStatus === 'CANCELLED' && bk.refundAmount) {
+                <span class="refund-credited-badge font-mono">
+                  (Refund Credited: {{ translationService.formatCurrency(bk.refundAmount) }})
+                </span>
+              }
+            </div>
+
+            <div class="card-buttons-group">
+              <button
+                type="button"
+                class="btn-secondary btn-view-ticket"
+                (click)="viewTicket(bk.pnr)"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span>{{ 'myBookings.viewTicket' | translate }}</span>
+              </button>
+
+              @if (bk.bookingStatus === 'CONFIRMED') {
+                <button
+                  type="button"
+                  class="btn-cancel-ticket"
+                  (click)="openCancelModal(bk)"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <span>{{ 'myBookings.cancelTicket' | translate }}</span>
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Cancellation Confirmation Modal -->
+    @if (selectedBookingToCancel) {
+      <div class="modal-backdrop">
+        <div class="modal-card card-editorial">
+          <div class="modal-header">
+            <div class="modal-icon-warning">⚠️</div>
+            <h3 class="modal-title font-serif">Confirm Ticket Cancellation</h3>
+          </div>
+
+          <p class="modal-text">
+            {{ 'myBookings.confirmCancel' | translate }}
+            <strong class="font-mono">{{ selectedBookingToCancel.pnr }}</strong> ({{ selectedBookingToCancel.trainName }})?
+          </p>
+
+          <div class="refund-calculation-box">
+            <div class="calc-row">
+              <span>Original Booking Fare:</span>
+              <span class="font-mono">{{ translationService.formatCurrency(selectedBookingToCancel.totalFare) }}</span>
+            </div>
+            <div class="calc-row">
+              <span>Cancellation Charge (20%):</span>
+              <span class="font-mono text-danger">-{{ translationService.formatCurrency(selectedBookingToCancel.totalFare * 0.2) }}</span>
+            </div>
+            <div class="calc-divider"></div>
+            <div class="calc-row total-refund">
+              <span>Estimated Refund (80%):</span>
+              <span class="refund-sum font-serif">
+                {{ translationService.formatCurrency(selectedBookingToCancel.totalFare * 0.8) }}
+              </span>
+            </div>
+          </div>
+
+          <p class="modal-refund-policy">
+            {{ 'myBookings.refundPolicy' | translate }}
+          </p>
+
+          @if (cancellationNotice) {
+            <div class="cancellation-alert-success">
+              ✓ {{ cancellationNotice }}
+            </div>
+          }
+
+          <div class="modal-actions-row">
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="closeCancelModal()"
+              [disabled]="cancellationNotice !== ''"
+            >
+              Keep Ticket
+            </button>
+            <button
+              type="button"
+              class="btn-danger-confirm"
+              (click)="confirmCancellation()"
+              [disabled]="cancellationNotice !== ''"
+            >
+              Confirm Cancellation
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
